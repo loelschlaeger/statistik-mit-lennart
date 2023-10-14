@@ -1,0 +1,9 @@
+---
+title: "t-Test"
+---
+
+Ist ein geschätzter Koeffizient signifikant? Unter der Annahme, dass die Fehler im Modell normalverteilt sind, können wir dazu einen t-Test durchführen.
+
+<div class="yt-container">
+  <iframe class="responsive-iframe" src="https://www.youtube.com/embed/I0qTafaNfhM?rel=0&autoplay=0&showinfo=0" frameborder="0"></iframe>
+</div>

@@ -2,7 +2,11 @@
   {
     "listing": "/index.html",
     "items": [
-      "/content/zeitreihenanalyse/zeitreihen.html"
+      "/content/regression/einfache-regression.html",
+      "/content/regression/multiple-regression.html",
+      "/content/regression/regression-in-R.html",
+      "/content/zeitreihenanalyse/zeitreihen.html",
+      "/content/testen/t-test.html"
     ]
   }
 ]
