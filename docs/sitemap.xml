@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://loelschlaeger.de/statistik-mit-lennart/content/zeitreihenanalyse/zeitreihen.html</loc>
+    <lastmod>2023-10-14T13:55:11.902Z</lastmod>
+  </url>
+  <url>
     <loc>https://loelschlaeger.de/statistik-mit-lennart/index.html</loc>
-    <lastmod>2023-10-14T13:47:22.518Z</lastmod>
+    <lastmod>2023-10-14T13:55:12.119Z</lastmod>
   </url>
   <url>
     <loc>https://loelschlaeger.de/statistik-mit-lennart/LICENSE.html</loc>
-    <lastmod>2023-10-14T13:47:23.158Z</lastmod>
+    <lastmod>2023-10-14T13:55:12.751Z</lastmod>
   </url>
 </urlset>

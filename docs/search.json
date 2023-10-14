@@ -1,10 +1,17 @@
 [
   {
+    "objectID": "content/zeitreihenanalyse/zeitreihen.html",
+    "href": "content/zeitreihenanalyse/zeitreihen.html",
+    "title": "Zeitreihen",
+    "section": "",
+    "text": "Eine Zeitreihe ist eine Abfolge von Beobachtungen über die Zeit. Zum Beispiel ist der Bitcoinpreis eine Zeitreihe:\n\n\n\n\n\nEin anderes Beispiel ist die Anzahl an Geburten in Deutschland:\n\n\n\n\n\nZwei wesentliche Unterschiede zwischen diesen Beispielen können wir hervorheben:\n\nZeitabstände der Beobachtungen: Die Beobachtungen können täglich oder monatlich sein, oder andere Frequenzen wie stündlich, quartalsweise oder jährlich aufweisen. Wenn die Beobachtungen in gleichmäßigen Abständen vorliegen (äquidistant sind), erleichtert das die Analyse.\nStruktur in der Zeitreihe: Die untere Zeitreihe weist eine besondere Struktur auf, wir sehen sich wiederholende Muster. Konkret können wir vermuten, dass manche Monate besonders geburtenstark und andere eher geburtenschwach sind. Solche Muster finden wir leider nicht in Finanzzeitreihen, sonst wäre es ziemlich einfach, Kursbewegungen vorherzusagen.\n\nBei der Analyse einer Zeitreihe interessieren wir uns für\n\nden grundsätzlichen Trend (und Änderungen im Trend),\nSaisonalitäten (und andere Muster),\nBereinigung von zufälligen Störungen,\nund natürlich Prognosen über den weiteren Verlauf.\n\n\nEine Zeitreihe notieren wir als \\(\\{y_t\\}_{t\\in I}\\), wobei \\(y_t\\) die Beobachtung zum Zeitpunt \\(t\\) ist und \\(I\\) die Menge aller Zeitpunkte beschreibt. Wir konzentrieren uns auf endliche Mengen \\(I\\) mit äquidistanten Elementen, daher können wir die Menge \\(I = \\{1,2,\\dots,T\\}\\) verwenden, wobei \\(T\\) die Gesamtanzahl an Beobachtungen ist."
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Übersicht",
     "section": "",
-    "text": "Keine Treffer"
+    "text": "Zeitreihen\n\n\n\n\n\n\n\nKeine Treffer"
   },
   {
     "objectID": "LICENSE.html",
