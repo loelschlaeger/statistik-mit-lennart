@@ -1,0 +1,10 @@
+---
+title: "Übersicht"
+comments: false
+listing:
+  contents: content
+  type: grid
+  image-height: "0"
+  fields: [title]
+  filter-ui: [title]
+---

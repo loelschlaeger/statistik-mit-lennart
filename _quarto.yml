@@ -1,0 +1,30 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Statistik mit Lennart"
+  navbar:
+    pinned: true
+  site-url: https://loelschlaeger.de/statistik-mit-lennart
+  page-footer:
+    center: 
+      - text: "© 2023 Lennart Oelschläger"
+        href: https://loelschlaeger.de
+  search: 
+    limit: 3
+  repo-url: https://github.com/loelschlaeger/statistik-mit-lennart
+  repo-actions: [edit, issue]
+
+format:
+  html:
+    theme: simplex
+    lang: "de"
+    css: styles.css
+    
+comments:
+  utterances:
+    repo: loelschlaeger/statistik-mit-lennart
+
+
+
