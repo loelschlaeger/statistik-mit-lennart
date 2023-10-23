@@ -3,10 +3,16 @@
     "listing": "/index.html",
     "items": [
       "/content/regression/einfache-regression.html",
+      "/content/verteilungen/kovarianz.html",
       "/content/regression/multiple-regression.html",
       "/content/regression/regression-in-R.html",
       "/content/zeitreihenanalyse/zeitreihen.html",
-      "/content/testen/t-test.html"
+      "/content/verteilungen/zufallsexperiment.html",
+      "/content/verteilungen/zufallsvariablen.html",
+      "/content/testen/t-test.html",
+      "/content/verteilungen/kovarianzmatrix.html",
+      "/content/verteilungen/unabhaengigkeit.html",
+      "/content/verteilungen/unkorreliertheit.html"
     ]
   }
 ]
