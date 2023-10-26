@@ -2,12 +2,7 @@
 title: "Kovarianz"
 ---
 
-Kovarianz ist ein Maß dafür, wie zwei Zufallsvariablen gemeinsam variieren. Eine positive Kovarianz zeigt an, dass sie tendenziell gemeinsam zunehmen, während eine negative Kovarianz anzeigt, dass sie tendenziell in entgegengesetzte Richtungen variieren.
+Die Kovarianz ist ein Maß dafür, wie zwei [Zufallsvariablen](zufallsvariablen.qmd) gemeinsam variieren. Eine positive Kovarianz zeigt an, dass sie tendenziell gemeinsam zunehmen, während eine negative Kovarianz anzeigt, dass sie tendenziell in entgegengesetzte Richtungen variieren.
 
 Die Kovarianz zweier Zufallsvariablen $X$ und $Y$ ist definiert als $$Cov(X,Y) = E([X-E(X)][Y-E(Y)]).$$
 
-::: {.callout-tip}
-## Beispiel
-
-Stellen wir uns zwei Zufallsvariablen $X$ und $Y$ vor, die den Erfolg von zwei verschiedenen Aktieninvestitionen repräsentieren. Wenn $X$ und $Y$ eine positive Kovarianz haben, bedeutet das, dass sie tendenziell gleichzeitig steigen oder fallen. Wenn die Aktien von $X$ steigen, steigen auch die von $Y$ und umgekehrt. Eine negative Kovarianz würde bedeuten, dass, wenn die Aktien von $X$ steigen, die Aktien von $Y$ tendenziell fallen und umgekehrt. Die Kovarianz gibt an, wie stark diese Beziehung zwischen den beiden Aktien ist.
-:::

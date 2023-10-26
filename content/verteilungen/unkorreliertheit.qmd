@@ -1,0 +1,20 @@
+---
+title: "Unkorreliertheit"
+---
+
+::: {.callout-caution collapse="true"}
+## Aus Unkorreliertheit folgt nicht Unabhängigkeit!
+
+Es gibt nämlich Zufallsvariablen, die unkorreliert aber nicht unabhängig sind. Seien zum Beispiel $X$ und $Y$ zwei unabhängige Zufallsvariablen mit 
+
+- $\Pr(X=0)=\Pr(X=1)=0.5$
+ 
+- und $\Pr(Y=-1)=\Pr(Y=1)=0.5$.
+
+In diesem Fall können wir zeigen, dass $X$ und die Zufallsvariable $Z := XY$ zwar unkorreliert, aber nicht unabhängig sind:
+
+1. Es gilt $$Cov (Z,X) = E([Z-E(Z)][X-E(X)]) = E(Z(X-0.5)) = E(X^2-0.5X) E(Y)=0,$$ da $E(Z) = E(XY) = E(X)E(Y) = 0$ wegen Unabhängigkeit von $X$ und $Y$ und da $E(Y) = 0$. Also sind $X$ und $Z$ unkorreliert. 
+
+2. Es gilt $$\Pr(Z=1\mid X = 0) = 0 \neq 0.5 = \Pr(Z=1\mid X = 1),$$ also hängt das Ergebnis von $Z$ von $X$ ab, also sind sie nicht unabhängig.
+
+:::

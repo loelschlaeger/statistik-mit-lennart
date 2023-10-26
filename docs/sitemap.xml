@@ -2,54 +2,54 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://loelschlaeger.de/statistik-mit-lennart/content/regression/einfache-regression.html</loc>
-    <lastmod>2023-10-14T14:03:54.077Z</lastmod>
+    <lastmod>2023-10-26T14:33:46.766Z</lastmod>
   </url>
   <url>
     <loc>https://loelschlaeger.de/statistik-mit-lennart/content/regression/multiple-regression.html</loc>
-    <lastmod>2023-10-14T14:03:54.288Z</lastmod>
+    <lastmod>2023-10-26T14:33:48.600Z</lastmod>
   </url>
   <url>
     <loc>https://loelschlaeger.de/statistik-mit-lennart/content/regression/regression-in-R.html</loc>
-    <lastmod>2023-10-14T14:03:55.662Z</lastmod>
+    <lastmod>2023-10-26T14:33:58.705Z</lastmod>
   </url>
   <url>
     <loc>https://loelschlaeger.de/statistik-mit-lennart/content/testen/t-test.html</loc>
-    <lastmod>2023-10-14T14:03:55.845Z</lastmod>
-  </url>
-  <url>
-    <loc>https://loelschlaeger.de/statistik-mit-lennart/content/zeitreihenanalyse/zeitreihen.html</loc>
-    <lastmod>2023-10-14T14:03:57.388Z</lastmod>
-  </url>
-  <url>
-    <loc>https://loelschlaeger.de/statistik-mit-lennart/index.html</loc>
-    <lastmod>2023-10-23T17:35:55.242Z</lastmod>
-  </url>
-  <url>
-    <loc>https://loelschlaeger.de/statistik-mit-lennart/LICENSE.html</loc>
-    <lastmod>2023-10-14T14:03:58.294Z</lastmod>
+    <lastmod>2023-10-26T14:34:00.131Z</lastmod>
   </url>
   <url>
     <loc>https://loelschlaeger.de/statistik-mit-lennart/content/verteilungen/kovarianz.html</loc>
-    <lastmod>2023-10-23T17:36:19.376Z</lastmod>
+    <lastmod>2023-10-26T14:34:01.790Z</lastmod>
   </url>
   <url>
     <loc>https://loelschlaeger.de/statistik-mit-lennart/content/verteilungen/kovarianzmatrix.html</loc>
-    <lastmod>2023-10-23T17:35:47.082Z</lastmod>
+    <lastmod>2023-10-26T14:34:03.392Z</lastmod>
   </url>
   <url>
     <loc>https://loelschlaeger.de/statistik-mit-lennart/content/verteilungen/unabhaengigkeit.html</loc>
-    <lastmod>2023-10-23T17:35:48.210Z</lastmod>
+    <lastmod>2023-10-26T14:34:08.340Z</lastmod>
   </url>
   <url>
     <loc>https://loelschlaeger.de/statistik-mit-lennart/content/verteilungen/unkorreliertheit.html</loc>
-    <lastmod>2023-10-23T17:35:49.756Z</lastmod>
+    <lastmod>2023-10-26T14:34:09.805Z</lastmod>
   </url>
   <url>
     <loc>https://loelschlaeger.de/statistik-mit-lennart/content/verteilungen/zufallsexperiment.html</loc>
-    <lastmod>2023-10-23T17:35:51.229Z</lastmod>
+    <lastmod>2023-10-26T14:34:10.883Z</lastmod>
   </url>
   <url>
     <loc>https://loelschlaeger.de/statistik-mit-lennart/content/verteilungen/zufallsvariablen.html</loc>
-    <lastmod>2023-10-23T17:35:53.177Z</lastmod>
+    <lastmod>2023-10-26T14:34:11.956Z</lastmod>
+  </url>
+  <url>
+    <loc>https://loelschlaeger.de/statistik-mit-lennart/content/zeitreihenanalyse/zeitreihen.html</loc>
+    <lastmod>2023-10-26T14:34:20.023Z</lastmod>
+  </url>
+  <url>
+    <loc>https://loelschlaeger.de/statistik-mit-lennart/index.html</loc>
+    <lastmod>2023-10-26T14:34:21.185Z</lastmod>
+  </url>
+  <url>
+    <loc>https://loelschlaeger.de/statistik-mit-lennart/LICENSE.html</loc>
+    <lastmod>2023-10-26T14:34:23.539Z</lastmod>
   </url>
 </urlset>

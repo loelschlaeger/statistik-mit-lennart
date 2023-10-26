@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Statistik mit Lennart – unkorreliertheit</title>
+<title>Statistik mit Lennart - Unkorreliertheit</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -58,6 +58,8 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
@@ -87,8 +89,48 @@ ul.task-list li input[type="checkbox"] {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Unkorreliertheit</h1>
+</div>
 
 
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Aus Unkorreliertheit folgt nicht Unabhängigkeit!
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Es gibt nämlich Zufallsvariablen, die unkorreliert aber nicht unabhängig sind. Seien zum Beispiel <span class="math inline">\(X\)</span> und <span class="math inline">\(Y\)</span> zwei unabhängige Zufallsvariablen mit</p>
+<ul>
+<li><p><span class="math inline">\(\Pr(X=0)=\Pr(X=1)=0.5\)</span></p></li>
+<li><p>und <span class="math inline">\(\Pr(Y=-1)=\Pr(Y=1)=0.5\)</span>.</p></li>
+</ul>
+<p>In diesem Fall können wir zeigen, dass <span class="math inline">\(X\)</span> und die Zufallsvariable <span class="math inline">\(Z := XY\)</span> zwar unkorreliert, aber nicht unabhängig sind:</p>
+<ol type="1">
+<li><p>Es gilt <span class="math display">\[Cov (Z,X) = E([Z-E(Z)][X-E(X)]) = E(Z(X-0.5)) = E(X^2-0.5X) E(Y)=0,\]</span> da <span class="math inline">\(E(Z) = E(XY) = E(X)E(Y) = 0\)</span> wegen Unabhängigkeit von <span class="math inline">\(X\)</span> und <span class="math inline">\(Y\)</span> und da <span class="math inline">\(E(Y) = 0\)</span>. Also sind <span class="math inline">\(X\)</span> und <span class="math inline">\(Z\)</span> unkorreliert.</p></li>
+<li><p>Es gilt <span class="math display">\[\Pr(Z=1\mid X = 0) = 0 \neq 0.5 = \Pr(Z=1\mid X = 1),\]</span> also hängt das Ergebnis von <span class="math inline">\(Z\)</span> von <span class="math inline">\(X\)</span> ab, also sind sie nicht unabhängig.</p></li>
+</ol>
+</div>
+</div>
+</div>
 
 
 
