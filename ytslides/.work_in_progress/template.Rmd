@@ -1,0 +1,31 @@
+---
+output:
+  beamer_presentation:
+    theme: "Rochester"
+    colortheme: "dove"
+    slide_level: 1
+classoption: 
+- t 
+#- "handout"
+- "aspectratio=169"
+header-includes:
+- \usepackage[ngerman]{babel}
+- \usepackage[utf8]{inputenc}
+- \usepackage{mdframed}
+- \newmdtheoremenv{ndef}{Definition}
+- \newmdtheoremenv{nsatz}{Satz}
+- \def\begincols{\begin{columns}}
+- \def\begincol{\begin{column}}
+- \def\endcol{\end{column}}
+- \def\endcols{\end{columns}}
+---
+
+# Cool title
+
+```{r, echo=FALSE}
+plot(cars)
+```
+
+---
+
+Some cool text

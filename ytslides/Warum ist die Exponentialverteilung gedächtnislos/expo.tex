@@ -1,0 +1,85 @@
+\documentclass[t,11pt,aspectratio=169]{beamer}
+\input{header}
+
+\begin{document}
+	
+\begin{frame}{Ein Beispiel}
+\begin{itemize}
+	\item Ein Tinder-Match alle 40 Stunden
+	\pause\item Zeit bis zum nächsten Match ist $X\sim\text{Exp}(\lambda=1/40)$
+	\pause\item Gerade hatte ich ein Match, die Wahrscheinlichkeit mehr als $t$ Stunden auf das nächste Match zu warten ist $P(X\geq t)$
+	\pause\item An einem Morgen sehe ich, dass ich am Abend zuvor (vor 10 Stunden) ein Match hatte. Die Verteilung der Wartezeit bis zum nächsten Match ist $P(X\geq 10+t \mid X\geq 10)$
+	\pause\item Entscheidend ist jetzt: $P(X\geq t)=P(X\geq 10+t \mid X\geq 10)$, das heißt die Verteilungen sind gleich!
+	\pause\item Aber warum?
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Die Exponentialverteilung}
+\begin{itemize}
+	\item Träger: nichtnegative, reelle Zahlen
+	\item Parameter: $\lambda>0$
+	\item Erwartungswert: $1/\lambda$
+	\item Varianz: $1/\lambda^2$
+	\item Einsatz: Modellierung von Lebensdauern oder Wartezeiten
+	\pause \item Dichtefunktion: 
+	\begin{align*}
+		f(x)= \begin{cases}
+			0 & x\leq 0 \\
+			\lambda e^{-\lambda x} & x>0 
+		\end{cases}
+	\end{align*}
+	\pause \item Verteilungsfunktion:
+	\begin{align*}
+	F(x)=\begin{cases}
+		0 & x\leq 0 \\
+		1-e^{-\lambda x} & x>0
+	\end{cases}
+	\end{align*}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\begin{center}
+	\includegraphics[height=\textheight]{exp.pdf}
+\end{center}
+\end{frame}
+
+\begin{frame}
+	\begin{center}
+		\includegraphics[height=\textheight]{ExpDF.pdf}
+	\end{center}
+\end{frame}
+
+\begin{frame}{Die Gedächtnislosigkeit der Exponentialverteilung}
+	Wenn $X\sim \text{Exp}(\lambda)$, dann ist
+	\begin{align*}
+		P(X\geq s+t\mid X\geq s) = P(X\geq t)~~~\forall s,t > 0
+	\end{align*}
+
+	\pause Die Exponentialverteilung ist die \textbf{einzige stetige} Verteilung, die diese Eigenschaft erfüllt. Im diskreten Fall erfüllt die geometrische Verteilung diese Eigenschaft.
+\end{frame}
+
+\begin{frame}{Ein Beispiel}
+	\begin{itemize}
+		\item Ein Tinder-Match alle 40 Stunden
+		\item Zeit bis zum nächsten Match ist $X\sim\text{Exp}(\lambda=1/40)$
+		\item Gerade hatte ich ein Match, die Wahrscheinlichkeit mehr als $t$ Stunden auf das nächste Match zu warten ist $P(X\geq t)$
+		\item An einem Morgen sehe ich, dass ich am Abend zuvor (vor 10 Stunden) ein Match hatte. Die Verteilung der Wartezeit bis zum nächsten Match ist $P(X\geq 10+t \mid X\geq 10)$
+		\item Entscheidend ist jetzt: $P(X\geq t)=P(X\geq 10+t \mid X\geq 10)$, das heißt die Verteilungen sind gleich!
+		\item Aber warum?
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Der Beweis}
+	Warum ist $P(X\geq t)=P(X\geq 10+t \mid X\geq 10)$?
+	\pause \begin{align*}
+		P(X\geq 10+t \mid X\geq 10) &= \frac{P(X\geq 10+t, X\geq 10)}{P(X\geq 10)} \\
+		&= \frac{P(X\geq 10+t)}{P(X\geq 10)} \\
+		&= \frac{1-P(X\leq 10+t)}{1-P(X\leq 10)} \\
+		&= \frac{1-(1-e^{-\lambda(10+t)})}{1-(1-e^{-\lambda 10})} \\
+		&= \frac{e^{-\lambda(10+t)}}{e^{-\lambda 10}} \\
+		&= e^{-\lambda(10+t)-(-\lambda10)} = e^{-\lambda t} = P(X\geq t)
+	\end{align*}
+\end{frame}
+
+\end{document}

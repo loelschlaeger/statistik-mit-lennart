@@ -1,0 +1,103 @@
+\documentclass[t,11pt,aspectratio=169]{beamer}
+\input{header}
+
+\begin{document}
+
+\begin{frame}
+	\begin{block}{Aufgabe}
+	Sei $X\sim Poi(\lambda)$. Was ist $\mathbb{E}(X)$?
+	\end{block}
+	\pause
+	\begin{alertblock}{Definition: Poisson Verteilung}
+	Eine Zufallsvariable $X$ ist Poisson verteilt zu dem Parameter $\lambda>0$, falls
+	\begin{align*}
+	\mathbb{P}(X=x)=\frac{e^{-\lambda}\lambda^x}{x!},~x=0,1,2,\dots
+	\end{align*}
+	\end{alertblock}
+	\pause
+	\begin{alertblock}{Definition: Erwartungswert im diskreten Fall}
+	Der Erwartungswert einer diskreten Zufallsvariable $X$ ist 
+	\begin{align*}
+	\mathbb{E}(X)=\sum_{x}x\cdot \mathbb{P}(X=x)
+	\end{align*}
+	\end{alertblock}
+\end{frame}
+
+\begin{frame}
+	\begin{block}{Aufgabe}
+	Sei $X\sim Poi(\lambda)$. Was ist $\mathbb{E}(X)$?
+	\end{block}
+	\begin{columns}[T] % align columns
+	\begin{column}{.48\textwidth}
+	\begin{align*}
+	\mathbb{E}(X)	 &= \sum_{x=0}^{\infty}x\cdot \mathbb{P}(X=x) \\ \pause
+	&= \sum_{x=0}^{\infty}x\cdot \frac{e^{-\lambda}\lambda^x}{x!} \\ \pause
+	&= \sum_{x=1}^{\infty}x\cdot \frac{e^{-\lambda}\lambda^x}{x!} \\ \pause
+	&= \lambda\cdot e^{-\lambda}\cdot\sum_{x=1}^{\infty}x\cdot \frac{\lambda^{x-1}}{x!} \\ \pause
+	\end{align*}
+	\end{column}
+	\vrule
+	\begin{column}{.48\textwidth}
+	\begin{align*}
+	&= \lambda\cdot e^{-\lambda}\cdot\sum_{x=1}^{\infty}x\cdot \frac{\lambda^{x-1}}{x\cdot  (x-1)!} \\ \pause
+	&= \lambda\cdot e^{-\lambda}\cdot\sum_{x=1}^{\infty} \frac{\lambda^{x-1}}{(x-1)!} \\ \pause
+	&= \lambda\cdot e^{-\lambda}\cdot\sum_{x=0}^{\infty}\frac{\lambda^{x}}{x!} \\ \pause
+	&= \lambda\cdot e^{-\lambda}\cdot e^{\lambda}\\ \pause
+	&= \lambda
+	\end{align*}
+	\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}
+	\begin{block}{Aufgabe}
+	Sei $X\sim Poi(\lambda)$. Was ist $\mathbb{V}(X)$?
+	\end{block}
+	\pause
+	\begin{alertblock}{Verschiebungssatz}
+	Für eine Zufallsvariable $X$ gilt
+	\begin{align*}
+	\mathbb{V}(X) =  \mathbb{E}(X^2)-\left[ \mathbb{E}(X) \right]^2.
+	\end{align*}
+	\end{alertblock}
+	\pause
+	Nach dem Verschiebungssatz ist dann also $\mathbb{V}(X) = \mathbb{E}(X^2)- \lambda^2.$
+\end{frame}
+
+\begin{frame}
+\begin{columns}[T] % align columns
+\begin{column}{.3\textwidth}
+\begin{align*}
+\mathbb{E}(X^2)	 &= \sum_{x=0}^{\infty}x^2\cdot \mathbb{P}(X=x) \\ \pause
+&= \sum_{x=0}^{\infty}x^2\cdot \frac{e^{-\lambda}\lambda^x}{x!} \\ \pause
+&= \sum_{x=1}^{\infty}x^2\cdot \frac{e^{-\lambda}\lambda^x}{x!} \\ \pause
+&= \sum_{x=1}^{\infty}x\cdot \frac{e^{-\lambda}\lambda^x}{(x-1)!} \\ \pause
+&= e^{-\lambda}\sum_{x=1}^{\infty}x\cdot \frac{\lambda^{x}}{(x-1)!} \\ \pause
+\end{align*}
+\end{column}
+\vrule
+\begin{column}{.7\textwidth}
+\begin{align*}
+&= e^{-\lambda} \left( \sum_{x=1}^{\infty}  \frac{(x-1)\cdot \lambda^x}{(x-1)!}+ \sum_{x=1}^{\infty} \frac{\lambda^x}{(x-1)!}  \right) \\ \pause
+&= e^{-\lambda} \left(\sum_{x=2}^{\infty} \frac{\lambda^x}{(x-2)!} +  \sum_{x=1}^{\infty} \frac{\lambda^x}{(x-1)!} \right) \\ \pause
+&= \lambda^2 e^{-\lambda} \sum_{x=2}^{\infty} \frac{\lambda^{x-2}}{(x-2)!} + \lambda  e^{-\lambda} \sum_{x=1}^{\infty} \frac{\lambda^{x-1}}{(x-1)!}\\ \pause
+&= \lambda^2 e^{-\lambda} \sum_{x=0}^{\infty} \frac{\lambda^x}{x!} + \lambda  e^{-\lambda} \sum_{x=0}^{\infty} \frac{\lambda^x}{x!} \\ \pause
+&= \lambda^2 e^{-\lambda} e^{\lambda} + \lambda e^{-\lambda} e^{\lambda} \\ \pause
+&= \lambda ^2 + \lambda 
+\end{align*}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\begin{block}{Aufgabe}
+Sei $X\sim Poi(\lambda)$. Was ist $\mathbb{V}(X)$?
+\end{block}
+\begin{align*}
+\mathbb{V}(X) &=  \mathbb{E}(X^2)-\left[ \mathbb{E}(X) \right]^2 \\
+&= \lambda^2 +\lambda -\lambda^2 \\
+&= \lambda
+\end{align*}
+\end{frame}
+
+\end{document}

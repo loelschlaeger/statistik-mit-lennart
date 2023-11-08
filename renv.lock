@@ -1509,6 +1509,16 @@
       ],
       "Hash": "d77c6f74be05c33164e33fbc85540cae"
     },
+    "wooldridge": {
+      "Package": "wooldridge",
+      "Version": "1.4-3",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "R"
+      ],
+      "Hash": "401576d1fd5729be57e9a1077fce25a5"
+    },
     "xfun": {
       "Package": "xfun",
       "Version": "0.40",

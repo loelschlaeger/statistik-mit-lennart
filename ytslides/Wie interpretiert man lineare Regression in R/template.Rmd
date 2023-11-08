@@ -1,0 +1,388 @@
+---
+output:
+  beamer_presentation:
+    theme: "Rochester"
+    colortheme: "dove"
+    slide_level: 1
+classoption: 
+- t 
+#- "handout"
+- "aspectratio = 169"
+header-includes:
+- \addtobeamertemplate{frametitle}{}{\vspace*{-0.5cm}}
+- \usepackage[ngerman]{babel}
+- \usepackage[utf8]{inputenc}
+- \usepackage{geometry}
+- \usepackage{mdframed}
+- \newmdtheoremenv{ndef}{Definition}
+- \newmdtheoremenv{nsatz}{Satz}
+- \setbeamercolor{block body}{bg=structure!10}
+- \setbeamercolor{block title}{bg=structure!20}
+---
+
+```{r, setup, include = FALSE}
+knitr::opts_chunk$set(
+  comment = "",
+  tidy = TRUE,
+  highlight = FALSE
+)
+```
+
+# Lineare Regression in R
+
+```{r, include = FALSE}
+library(dplyr)
+hauspreise <- wooldridge::hprice1 %>% 
+  summarize(
+    preis = price * 1000, 
+    wohnflaeche = sqrft * 0.09290304, 
+    schlafzimmer = bdrms,
+    grundflaeche = lotsize * 0.09290304
+  )
+```
+
+```{r}
+str(hauspreise) # Quelle: wooldridge::hprice1 (transformiert)
+```
+
+# Lineare Regression in R
+
+Falls es dich interessiert, genau so habe ich den Datensatz `hauspreise` gebildet:
+
+```{r, eval = FALSE, tidy = FALSE}
+library(dplyr)
+umrechnungsfaktor <- 0.09290304
+hauspreise <- wooldridge::hprice1 %>% 
+  summarize(
+    preis = price * 1000, 
+    wohnflaeche = sqrft * umrechnungsfaktor, 
+    schlafzimmer = bdrms,
+    grundflaeche = lotsize * umrechnungsfaktor
+  )
+```
+
+# Lineare Regression in R
+
+```{r, include = FALSE}
+library(dplyr)
+hauspreise <- wooldridge::hprice1 %>% 
+  summarize(
+    preis = price * 1000, 
+    wohnflaeche = sqrft * 0.09290304, 
+    schlafzimmer = bdrms,
+    grundflaeche = lotsize * 0.09290304
+  )
+```
+
+```{r}
+str(hauspreise) # Quelle: wooldridge::hprice1 (transformiert)
+```
+
+\pause
+
+```{r, tidy = FALSE}
+model <- lm(
+  formula = preis ~ wohnflaeche + I(schlafzimmer > 4) + grundflaeche, 
+  data = hauspreise
+)
+```
+
+\pause
+
+```{r, eval = FALSE}
+summary(model)
+```
+
+---
+
+\vspace{-2cm}
+\footnotesize
+```{r, echo = FALSE}
+summary(model)
+```
+\normalsize
+
+--- 
+
+\vspace{-1.5cm}
+\makebox[\linewidth]{\includegraphics[width=\paperwidth]{figures/call.png}}
+
+Ganz oben steht der Funktionsaufruf ("`Call`") der `lm()` Funktion:
+
+1. `formula` ist unsere Modellformel
+  
+2. `data` ist der Name unseres Datensatzes
+  
+\pause
+Die Modellformel übersetzen wir so:
+
+- Allgemeine Formel: $y_i = \beta_0 + \beta_1 x_{i,1} + \beta_2 x_{i,2} + \beta_3 x_{i,3} + u_i$, $i = 1,\dots,n$
+  
+- R Formel: `preis ~ wohnflaeche + I(schlafzimmer > 4) + grundflaeche`
+  
+- Übersetzt: $$\text{preis}_i = \beta_0 + \beta_1 \text{wohnflaeche}_i + \beta_2 \underbrace{1\{\text{schlafzimmer} > 4\}}_{\text{Indikator-Variable}} + \beta_3 \text{grundflaeche} + u_i$$
+
+--- 
+
+\vspace{-1.5cm}
+\makebox[\linewidth]{\includegraphics[width=\paperwidth]{figures/residuals.png}}
+
+Als nächstes kommt eine Zusammenfassung der Residuen. 
+
+\begin{block}{Was sind nochmal Residuen?}
+Für alle Beobachtungen $i = 1,\dots, n$ ist das Residuum $\hat{u}_i$ die Differenz aus dem beobachteten Preis $\text{preis}_i$ und dem durch das Modell erklärten Preis $\widehat{\text{preis}}_i$, also:
+\begin{align*}
+  \hat{u}_i &= \text{preis}_i - \widehat{\text{preis}}_i \\
+  &= \text{preis}_i - (\hat{\beta}_0 + \hat{\beta}_1 \text{wohnflaeche}_i + \hat{\beta}_2 1\{\text{schlafzimmer} > 4\} + \hat{\beta}_3 \text{grundflaeche}).
+\end{align*}
+\end{block}
+
+--- 
+
+\vspace{-1.5cm}
+\makebox[\linewidth]{\includegraphics[width=\paperwidth]{figures/residuals.png}}
+
+Die konkreten Residuenwerte für unser geschätztes Modell bekommen wir so:
+```{r}
+residuals <- model$residuals
+head(residuals, n = 5)
+```
+
+\pause
+```{r}
+summary(residuals)
+```
+
+--- 
+
+\vspace{-1.5cm}
+\makebox[\linewidth]{\includegraphics[width=\paperwidth]{figures/residuals.png}}
+
+Was für Werte wünschen wir uns hier eigentlich? 
+
+\pause
+Wir möchten, dass die Residuen symmetrisch um die geschätzte Regressionslinie streuen, also sollte:
+
+- |`Min`| $\approx$ `Max`
+- |`1Q`| $\approx$ `3Q`
+- `Median` $\approx$ 0
+
+--- 
+
+\vspace{-1.5cm}
+\makebox[\linewidth]{\includegraphics[width=\paperwidth]{figures/coefficients.png}}
+
+In dieser Tabelle stehen Informationen über die Kleinste-Quadrate-Schätzwerte. 
+
+Die Zeilennamen sind:
+
+- `(Intercept)`, also $\beta_0$
+- `wohnflaeche`, also der zur Variable `wohnflaeche` gehörige Koeffizient $\beta_1$
+- `I(schlafzimmer > 4)TRUE`, also $\beta_2$
+- `grundflaeche`, also $\beta_3$
+
+--- 
+
+\vspace{-1.5cm}
+\makebox[\linewidth]{\includegraphics[width=\paperwidth]{figures/coefficients.png}}
+
+In Spalte `Estimate` stehen die Schätzwerte, also:
+
+- $\hat{\beta}_0 = \texttt{5.384e+04} = 5.384 \cdot 10^4 = 53840$
+- $\hat{\beta}_1 = \texttt{1.134e+03} = 1134$
+- $\hat{\beta}_2 = \texttt{1.049e+05} = 10490$
+- $\hat{\beta}_3 = \texttt{2.019e+01} = 20.19$
+
+\pause
+Damit können wir jetzt interpretieren, dass ein zusätzlicher Quadratmeter Wohnfläche \textit{ceteris paribus} (alles andere bleibt gleich) den Verkaufspreis um 1134 Dollar erhöht.
+
+--- 
+
+\vspace{-1.5cm}
+\makebox[\linewidth]{\includegraphics[width=\paperwidth]{figures/coefficients.png}}
+
+In Spalte `Std. Error` stehen die Standardfehler der geschätzten Koeffizienten (für deren Berechnung wir übrigens die Homoskedastie der Fehler $u_i$ annehmen), also:
+
+- $se(\hat{\beta}_0) = \texttt{2.339e+04} = 23390$
+- $se(\hat{\beta}_1) = \texttt{1.272e+02} = 127.2$
+- $se(\hat{\beta}_2) = \texttt{2.233e+04} = 22330$
+- $se(\hat{\beta}_3) = \texttt{6.253e+00} = 6.253$
+
+Hier gilt, dass ein kleinerer Standardfehler für einen präziseren Schätzwert steht. 
+
+--- 
+
+\vspace{-1.5cm}
+\makebox[\linewidth]{\includegraphics[width=\paperwidth]{figures/coefficients.png}}
+
+In Spalte `t value` stehen die Teststatistiken mit denen wir testen, ob ein Regressor einen signifikanten Einfluss auf die zu erklärende Variable (den Preis) hat:  
+\begin{itemize}
+  \item[$H_0$:] $\beta_k = 0$
+  \item[$H_1$:] $\beta_k \neq 0$
+\end{itemize}
+
+\pause
+Für jeden Koeffizienten $k = 0,\dots,3$ wird dafür folgendes berechnet:
+$$\texttt{t value} = t_k = \frac{\hat{\beta}_k}{se(\hat{\beta}_k)} = \frac{\texttt{Estimate}}{\texttt{Std. Error}}$$
+
+--- 
+
+\vspace{-1.5cm}
+\makebox[\linewidth]{\includegraphics[width=\paperwidth]{figures/coefficients.png}}
+
+Unter der Annahme, dass die Fehler normalverteilt sind, gilt:
+
+$$t_k = \frac{\hat{\beta}_k}{se(\hat{\beta}_k)} \sim t(n-K-1)$$
+
+- $t(n-K-1)$ ist die $t$-Verteilung mit $n-K-1$ Freiheitsgraden
+- $n = 88$ ist der Stichprobenumfang
+- $K = 3$ ist die Anzahl an Regressoren (ohne Intercept!)
+
+--- 
+
+\vspace{-1.5cm}
+\makebox[\linewidth]{\includegraphics[width=\paperwidth]{figures/coefficients.png}}
+
+In der Spalte `Pr(>|t|)` stehen die "p-values". Das sind die Wahrscheinlichkeiten, mit denen wir unter der $t(n-K-1)$-Verteilung einen betragsmäßig größeren Wert als $t_k$ beobachten. 
+
+--- 
+
+\vspace{-1.5cm}
+\makebox[\linewidth]{\includegraphics[width=\paperwidth]{figures/coefficients_marked.png}}
+
+In der Spalte `Pr(>|t|)` stehen die "p-values". Das sind die Wahrscheinlichkeiten, mit denen wir unter der $t(n-K-1)$-Verteilung einen betragsmäßig größeren Wert als $t_k$ beobachten. \textcolor{red}{Also zum Beispiel für den Intercept}:
+
+```{r, echo = FALSE, warning = FALSE, out.height = "40%", out.width = "60%", fig.dim = c(6,2), fig.align = 'center'}
+library(ggplot2)
+ggplot(data.frame(x = c(-4, 4)), aes(x = x)) +
+  stat_function(fun = dt, args = list(df = 84)) +
+  stat_function(fun = dt, args = list(df = 84), xlim = c(-4, -2.302), geom = "area", fill = "red") +
+  stat_function(fun = dt, args = list(df = 84), xlim = c(2.302, 4), geom = "area", fill = "red") +
+  theme_minimal() +
+  xlab("") +
+  ylab("") +
+  labs(title = "Dichte der t(84)-Verteilung")
+```
+
+--- 
+
+\vspace{-1.5cm}
+\makebox[\linewidth]{\includegraphics[width=\paperwidth]{figures/coefficients_marked.png}}
+
+\begin{block}{Wie trifft man nochmal die Testentscheidung?}
+  Wenn $\texttt{p-value} < \alpha$, verwerfe $H_0: \beta_k = 0$.
+\end{block}
+
+\pause
+Also ist der Intercept signifikant zu $\alpha = \textcolor{blue}{5\%}$, denn $\textcolor{red}{0.02380} < \textcolor{blue}{0.05}$.
+
+\pause
+Die Sterne in der rechten Spalte bieten einen schnellen Überblick:
+
+- Koeffizienten mit \texttt{p-value} < 10\% bekommen einen \texttt{.}
+- \texttt{p-value} < 5\% gibt \texttt{*},\ \texttt{p-value} < 1\% gibt \texttt{**},\ \texttt{p-value} < 0.1\% gibt \texttt{***}
+
+--- 
+
+\vspace{-1.5cm}
+\makebox[\linewidth]{\includegraphics[width=\paperwidth]{figures/last.png}}
+
+Am Ende stehen noch drei Zeilen mit viel Information:
+
+1. ein Schätzwert für die Standardabweichung $\sigma$ der Fehler $u_i$
+
+2. die Gütekriterien $R^2$ und adjustiertes $R^2$
+
+3. das Ergebnis des "Overall-$F$-Test"
+
+---
+
+\vspace{-1.5cm}
+\makebox[\linewidth]{\includegraphics[width=\paperwidth]{figures/residual_se.png}}
+
+Der Schätzwert für die Standardabweichung $\sigma$ der Fehler ist
+$$\hat{\sigma} = \sqrt{SSR / (n-K-1)}$$
+\pause
+wobei $SSR$ (für "Sum of squared residuals") die Summe der quadrierten Residuen ist:
+$$SSR = \sum_{i=1}^n \hat{u}_i^2 = \sum_{i=1}^n (y_i - \hat{y}_i^2)$$
+
+\pause
+```{r}
+sqrt(sum(model$residuals^2) / 84)
+```
+
+(im `summary()` Output wurde gerundet, daher der kleine Unterschied)
+
+---
+
+\vspace{-1.5cm}
+\makebox[\linewidth]{\includegraphics[width=\paperwidth]{figures/residual_se.png}}
+
+Zur Erinnerung: Neben $SSR$ gibt es auch noch
+
+- $SST = \sum_{i=1}^n (y_i - \bar{y})^2$ (für "Sum of squares total") und
+
+- $SSE = \sum_{i=1}^n (\hat{y}_i - \bar{y})^2$ (für "Sum of squares explained").
+
+\pause
+Es gilt $SST = SSE + SSR$, das heißt, die Gesamtvariabilität des Datensatzes ($SST$) ist gleich der durch die Regression erklärten Variabilität ($SSE$) plus der unerklärten Variabilität ($SSR$).
+
+--- 
+
+\vspace{-1.5cm}
+\makebox[\linewidth]{\includegraphics[width=\paperwidth]{figures/rsquared.png}}
+
+`Multiple R-squared` ist das $R^2$ mit $$R^2 = SSE / SST = 1 - SSR / SST,$$ das heißt die Größe $R^2$ gibt den Anteil der durch das Modell erklärten Variabilität an der Gesamtvariabilität im Datensatz an (hier $73,33\%$ - ganz gut!).
+
+\pause
+Daneben steht das adjustierte $R^2$: 
+$$\displaystyle \bar{R}^2 = 1 - \frac{SSR/(n-K-1))}{SST/(n-1)}.$$
+
+\begin{block}{Was ist eigentlich der Unterschied?}
+Während $R^2$ zwingend mit jedem hinzugefügten Regressor steigt, tut das $\bar{R}^2$ nicht notwendigerweise. Also ist $R^2$ nicht zur Modellselektion geeignet, $\bar{R}^2$ aber schon.
+\end{block}
+
+--- 
+
+\vspace{-1.5cm}
+\makebox[\linewidth]{\includegraphics[width=\paperwidth]{figures/ftest.png}}
+
+Die letzte Zeile ist das Ergebnis des "Overall-$F$-Test" (Globaler $F$-Test). Er testet
+
+\begin{itemize}
+  \item[$H_0$:] $\beta_1 = \beta_2 = \beta_3 = 0$
+    \item[$H_1$:] $\beta_1 \neq 0$ oder $\beta_2 \neq 0$ oder $\beta_3 \neq 0$
+\end{itemize}
+
+\pause
+Der Wert der Teststatistik wurde berechnet mit der Formel
+$$\texttt{F-statistic} = F = \frac{R^2 / K}{(1-R^2) / (n-K-1)}$$
+
+```{r}
+r.squared <- summary(model)$r.squared
+(r.squared / 3) / ((1 - r.squared) / 84)
+```
+
+\pause
+Die Teststatistik ist $F$-verteilt zu $K$ und $n-K-1$ Freiheitsgraden (`DF`). Außerdem ist der `p-value` angegeben. Natürlich gilt auch hier: $H_0$ verwerfen, wenn `p-value` < $\alpha$.
+
+---
+
+\begin{columns}[T]
+\begin{column}{0.65\textwidth}
+  \vspace{-1cm}
+  \includegraphics[height=\textheight]{figures/complete_gaps.png}
+\end{column}
+\begin{column}{0.35\textwidth}
+  \vspace{0.5cm}
+  \hspace{0.1cm} \underline{Dein Selbsttest}:
+  \begin{enumerate}
+    \item Was ist $se(\hat{\beta}_2)?$
+    \item Wie viele Signifikanzsterne hat $\hat{\beta}_3$?
+    \item Wie groß ist $n$?
+    \item Wie groß ist $SSE$?
+    \item Welche Freiheitsgrade hat die $F$-Statistik?
+  \end{enumerate}
+\end{column}
+\end{columns}
+

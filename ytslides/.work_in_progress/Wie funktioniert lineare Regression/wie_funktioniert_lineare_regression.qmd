@@ -1,0 +1,33 @@
+---
+format:
+  revealjs:
+    transition: zoom
+    margin: 0.25
+server: shiny
+---
+
+```{r, setup, include = FALSE}
+library("ggplot2")
+```
+
+# Regression
+
+$$y_i = \beta_0 + x_i \beta_1 + u_i, \quad i = 1,\dots,n$$
+
+. . .
+
+```{r}
+#| panel: fill
+sliderInput("bins", "Number of bins:", 
+            min = 1, max = 50, value = 30)
+plotOutput("distPlot")
+```
+
+```{r}
+#| context: server
+output$distPlot <- renderPlot({
+  x <- faithful[, 2]  # Old Faithful Geyser data
+  bins <- seq(min(x), max(x), length.out = input$bins + 1)
+  hist(x, breaks = bins, col = 'darkgray', border = 'white')
+})
+```

@@ -1,0 +1,325 @@
+\documentclass[t,11pt]{beamer}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usetikzlibrary{calc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{framed}
+\usecolortheme{orchid}
+\usepackage{etoolbox}
+\useinnertheme[shadow=true]{rounded}
+
+%%% PROGRESSBAR
+\definecolor{pbblue}{HTML}{D8D8D8}% filling color for the progress bar
+\definecolor{pbgray}{HTML}{F2F2F2}% background color for the progress bar
+\useoutertheme{infolines}
+\setbeamerfont{footline}{size=\normalsize}
+\setbeamersize{text margin left=30pt,text margin right=30pt}
+\makeatletter
+\setbeamertemplate{footline}
+{
+	\leavevmode%
+	\hbox{%
+		\begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.5ex,dp=1ex,center]{title in head/foot}%
+			\usebeamerfont{title in head/foot}\insertshorttitle
+		\end{beamercolorbox}%
+		\begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.5ex,dp=1ex,center]{date in head/foot}%
+			%\usebeamerfont{date in head/foot}\insertshortdate{}\hspace*{2em}
+			%\insertframenumber\hspace*{2ex} 
+		\end{beamercolorbox}
+		\begin{beamercolorbox}[wd=.333333\paperwidth,ht=3ex,dp=1ex,center]{author in head/foot}%
+			\usebeamerfont{author in head/foot}\insertshortauthor~~%\beamer@ifempty{\insertshortinstitute}{}{(\insertshortinstitute)}
+		\end{beamercolorbox}%
+	}%
+	\vskip0pt%
+}
+\makeatother
+\makeatletter
+\def\progressbar@progressbar{} % the progress bar
+\newcount\progressbar@tmpcounta% auxiliary counter
+\newcount\progressbar@tmpcountb% auxiliary counter
+\newdimen\progressbar@pbht %progressbar height
+\newdimen\progressbar@pbwd %progressbar width
+\newdimen\progressbar@tmpdim % auxiliary dimension
+\progressbar@pbwd=\linewidth
+\progressbar@pbht=1.5ex
+\def\progressbar@progressbar{%
+    \progressbar@tmpcounta=\insertframenumber
+    \progressbar@tmpcountb=\inserttotalframenumber
+    \progressbar@tmpdim=\progressbar@pbwd
+    \multiply\progressbar@tmpdim by \progressbar@tmpcounta
+    \divide\progressbar@tmpdim by \progressbar@tmpcountb
+  \begin{tikzpicture}[rounded corners=3pt,very thin]
+    \shade[top color=pbgray!20,bottom color=pbgray!20,middle color=pbgray!50]
+      (0pt, 0pt) rectangle ++ (\progressbar@pbwd, \progressbar@pbht);
+      \shade[draw=pbblue,top color=pbblue!50,bottom color=pbblue!50,middle color=pbblue] %
+        (0pt, 0pt) rectangle ++ (\progressbar@tmpdim, \progressbar@pbht);
+    \draw[color=normal text.fg!50]  
+      (0pt, 0pt) rectangle (\progressbar@pbwd, \progressbar@pbht) 
+        node[pos=0.5,color=normal text.fg] {\textnormal{%
+             \pgfmathparse{\insertframenumber*100/\inserttotalframenumber}%
+             \pgfmathprintnumber[fixed,precision=0]{\pgfmathresult}\,\%%
+        }%
+    };
+  \end{tikzpicture}%
+}
+\addtobeamertemplate{headline}{}
+{%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=4ex,center,dp=1ex]{white}%
+    \progressbar@progressbar%
+  \end{beamercolorbox}%
+}
+\makeatother
+
+
+%%% BLOCKS
+% block = Aufgabe
+\setbeamercolor{block title}{fg=black,bg=blue!30!white} 
+\setbeamercolor{block body}{fg=black, bg=blue!3!white}
+
+% alertblock = Definition
+\setbeamercolor{block title alerted}{fg=black,bg=red!50!white} 
+\setbeamercolor{block body alerted}{fg=black, bg=red!3!white}
+
+% exampleblock = Wiederholung
+\setbeamercolor{block title example}{fg=black,bg=green!30!white} 
+\setbeamercolor{block body example}{fg=black, bg=green!3!white}
+
+
+
+\begin{document}
+	\author{www.oilbat.de}
+	%\title{Stochastik}
+	\subtitle{}
+	\logo{}
+	\institute{}
+	\date{}
+	\subject{}
+	\setbeamercovered{transparent}
+	\setbeamertemplate{navigation symbols}{}
+
+\addtocounter{framenumber}{-1}
+\setbeamercovered{invisible}
+
+\begin{frame}
+	\begin{block}{Aufgabe}
+		Berechne den Korrelationskoeffizienten nach Spearman für die folgende, zweidimensionale Stichprobe.
+	\end{block}
+	\vspace{0.5cm}
+	\begin{tabular}{|cc|cccccccc|}
+		\hline
+		\multicolumn{2}{|c|}{Person} & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\
+		\hline 
+		Größe [cm] & x & 174 & 183 & 162  & 170 & 182 & 176 & 173 & 198  \\ 
+		Gewicht [kg] & y &  73 & 93 & 74 & 58 & 90 & 88 & 72 & 91\\ 
+		\hline 
+	\end{tabular}
+
+\end{frame}
+
+\begin{frame}
+\begin{block}{Aufgabe}
+	Berechne den Korrelationskoeffizienten nach Spearman für die folgende, zweidimensionale Stichprobe.
+\end{block}
+\vspace{0.5cm}
+\begin{tabular}{|cc|cccccccc|}
+	\hline
+	\multicolumn{2}{|c|}{Person} & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\
+	\hline 
+	Größe [cm] & x & 174 & 183 & 162  & 170 & 182 & 176 & 173 & 198  \\ 
+	\multicolumn{2}{|c|}{\textbf{Rang}} & 4 & 7 & 1 & 2 & 6 & 5 & 3 & 8 \\
+	\hline
+	Gewicht [kg] & y &  73 & 93 & 74 & 58 & 90 & 88 & 72 & 91\\ 
+	\multicolumn{2}{|c|}{\textbf{Rang}} & 3 & 8 & 4 & 1 & 6 & 5 & 2 & 7 \\
+	\hline 
+\end{tabular}
+
+\end{frame}
+
+\begin{frame}
+\begin{alertblock}{Definition: Spearmans Korrelationskoeffizient}
+	Für gegebene Daten $(x_i,y_i)$, $i=1,\dots,n$, ist der Korrelationskoeffizient nach Spearman $r_{SP}$ definiert durch
+	\begin{align*}
+	r_{SP}=\frac{\sum_{i=1}^{n}\left[rg(x_i)-\bar{rg}_X\right]\left[rg(y_i)-\bar{rg}_Y\right]}{\sqrt{\sum_{i=1}^{n}\left[rg(x_i)-\bar{rg}_X\right]^2}\sqrt{\sum_{i=1}^{n}\left[rg(y_i)-\bar{rg}_Y\right]^2}},
+	\end{align*}
+	wobei
+	\begin{align*}
+	\bar{rg}_X=\frac{1}{n}\sum_{i=1}^{n}rg(x_i)=\frac{1}{n}\sum_{i=1}^{n}i=\frac{1}{n}\cdot\frac{n(n+1)}{2}=\frac{n+1}{2}=\bar{rg}_Y.
+	\end{align*}
+\end{alertblock}
+\end{frame}
+
+
+\begin{frame}
+	\begin{alertblock}{Definition: Spearmans Korrelationskoeffizient}
+		Für gegebene Daten $(x_i,y_i)$, $i=1,\dots,n$, ist der Korrelationskoeffizient nach Spearman $r_{SP}$ definiert durch
+		\begin{align*}
+			r_{SP}=\frac{\sum_{i=1}^{n}\left[rg(x_i)-\bar{rg}_X\right]\left[rg(y_i)-\bar{rg}_Y\right]}{\sqrt{\sum_{i=1}^{n}\left[rg(x_i)-\bar{rg}_X\right]^2}\sqrt{\sum_{i=1}^{n}\left[rg(y_i)-\bar{rg}_Y\right]^2}},
+		\end{align*}
+		wobei
+		\begin{align*}
+		\bar{rg}_X=\frac{1}{n}\sum_{i=1}^{n}rg(x_i)=\frac{1}{n}\sum_{i=1}^{n}i=\frac{1}{n}\cdot\frac{n(n+1)}{2}=\frac{n+1}{2}=\bar{rg}_Y.
+		\end{align*}
+	\end{alertblock}
+\vspace{0.5cm}
+	In unserem Beispiel: $\bar{rg}_X=\bar{rg}_Y=\frac{n+1}{2}=\frac{9}{2}=4,5$
+\end{frame}
+
+\begin{frame}
+	\begin{align*}
+		r_{SP} &= \frac{\sum_{i=1}^{n}\left[rg(x_i)-\bar{rg}_X\right]\left[rg(y_i)-\bar{rg}_Y\right]}{\sqrt{\sum_{i=1}^{n}\left[rg(x_i)-\bar{rg}_X\right]^2}\sqrt{\sum_{i=1}^{n}\left[rg(y_i)-\bar{rg}_Y\right]^2}} \\
+		&= \frac{\sum_{i=1}^{8}\left[rg(x_i)-4,5\right]\left[rg(y_i)-4,5\right]}{\sqrt{\sum_{i=1}^{8}\left[rg(x_i)-4,5\right]^2}\sqrt{\sum_{i=8}^{n}\left[rg(y_i)-4,5\right]^2}}\\
+		&= \frac{(4-4,5)\cdot (3-4,5)+\dots+(8-36)\cdot (7-4,5)}{\sqrt{(4-4,5)^2+\dots+(8-4,5)^2}\sqrt{(3-4,5)^2+\dots+(7-4,5)^2}} \\
+		&= \frac{5}{6}
+	\end{align*}
+\end{frame}
+
+\begin{frame}
+\begin{tabular}{|cc|cccccccc|}
+	\hline
+	\multicolumn{2}{|c|}{Person} & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\
+	\hline 
+	Größe [cm] & x & 174 & 183 & 162  & 170 & 182 & 176 & 173 & 198  \\ 
+	Gewicht [kg] & y &  73 & 93 & 74 & 58 & 90 & 88 & 72 & 91\\ 
+	\hline 
+\end{tabular}
+$$\text{Korrelationskoeffizient nach Spearman: }r_{SP}=\frac{5}{6}$$
+\end{frame}
+
+\begin{frame}
+\begin{tabular}{|cc|cccccccc|}
+	\hline
+	\multicolumn{2}{|c|}{Person} & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\
+	\hline 
+	Größe [cm] & x & 174 & 183 & 162  & 170 & 182 & 176 & 173 & 198  \\ 
+	Gewicht [kg] & y &  73 & 93 & 74 & 58 & 90 & 88 & 72 & 91\\ 
+	\hline 
+\end{tabular}
+$$\text{Korrelationskoeffizient nach Spearman: }r_{SP}=\frac{5}{6}$$
+\begin{alertblock}{Interpretation}
+	\begin{itemize}
+		\item $r_{SP} \in [-1,1]$
+		\item $r_{SP}>0$ -- positiver Zusammenhang
+		\item $r_{SP}=0$ -- kein Zusammenhang
+		\item $r_{SP}<0$ -- negativer Zusammenhang
+	\end{itemize}
+\end{alertblock}
+\end{frame}
+
+\begin{frame}
+	\begin{exampleblock}{Einfachere Berechnung von $r_{SP}$}
+		Für Daten $(x_i,y_i)$, $i=1,\dots,n$ mit $x_i\neq x_j$ und $y_i\neq y_j$ für alle $i,j$ gilt
+		\begin{align*}
+			r_{SP}&=1-\frac{6 \cdot \sum_{i=1}^{n} (rg(x_i)-rg(y_i))^2}{(n-1)\cdot n \cdot (n+1)}.
+		\end{align*}
+	\end{exampleblock}
+\vspace{0.5cm}
+	\textbf{Wichtig:} Gilt nur falls die Daten paarweise verschieden sind (d.h. wenn es keine \textit{Bindungen} gibt)!
+\end{frame}
+
+\begin{frame}
+\begin{exampleblock}{Einfachere Berechnung von $r_{SP}$}
+\end{exampleblock}
+	\begin{center}
+		\renewcommand{\arraystretch}{1.2}
+		\begin{tabular}{cccccc}
+			$x$ & $y$ & $rg(x)$ & $rg(y)$ & $rg(x)-rg(y)$ &  $(rg(x)-rg(y))^2$ \\
+			\hline
+			174 & 73 & 4 & 3 &  & \\
+			183 & 93 & 7 & 8 &  &\\
+			162 & 74 & 1 & 4 &  & \\
+			170 & 58 & 2 & 1 &  & \\
+			182 & 90 & 6 & 6 &  & \\
+			176 & 88 & 5 & 5 &  &  \\
+			173 & 72 & 3 & 2 &  & \\
+			198 & 91 & 8 & 7 &  & \\
+			\hline
+			$\sum$ &&&&& 
+		\end{tabular}
+	\end{center}
+\end{frame}
+
+\begin{frame}
+\begin{exampleblock}{Einfachere Berechnung von $r_{SP}$}
+\end{exampleblock}
+\begin{center}
+	\renewcommand{\arraystretch}{1.2}
+	\begin{tabular}{cccccc}
+		$x$ & $y$ & $rg(x)$ & $rg(y)$ & $rg(x)-rg(y)$ &  $(rg(x)-rg(y))^2$ \\
+		\hline
+		174 & 73 & 4 & 3 & 1 &  \\
+		183 & 93 & 7 & 8 & -1 & \\
+		162 & 74 & 1 & 4 & -3 &  \\
+		170 & 58 & 2 & 1 & 1 & \\
+		182 & 90 & 6 & 6 & 0 & \\
+		176 & 88 & 5 & 5 & 0 &  \\
+		173 & 72 & 3 & 2 & 1 & \\
+		198 & 91 & 8 & 7 & 1 & \\
+		\hline
+		$\sum$ &&&&& 
+	\end{tabular}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\begin{exampleblock}{Einfachere Berechnung von $r_{SP}$}
+\end{exampleblock}
+\begin{center}
+	\renewcommand{\arraystretch}{1.2}
+	\begin{tabular}{cccccc}
+		$x$ & $y$ & $rg(x)$ & $rg(y)$ & $rg(x)-rg(y)$ &  $(rg(x)-rg(y))^2$ \\
+		\hline
+		174 & 73 & 4 & 3 & 1 & 1 \\
+		183 & 93 & 7 & 8 & -1 & 1\\
+		162 & 74 & 1 & 4 & -3 & 9 \\
+		170 & 58 & 2 & 1 & 1 & 1\\
+		182 & 90 & 6 & 6 & 0 & 0\\
+		176 & 88 & 5 & 5 & 0 & 0 \\
+		173 & 72 & 3 & 2 & 1 & 1\\
+		198 & 91 & 8 & 7 & 1 & 1\\
+		\hline
+		$\sum$ &&&&& 
+	\end{tabular}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\begin{exampleblock}{Einfachere Berechnung von $r_{SP}$}
+\end{exampleblock}
+\begin{center}
+	\renewcommand{\arraystretch}{1.2}
+	\begin{tabular}{cccccc}
+		$x$ & $y$ & $rg(x)$ & $rg(y)$ & $rg(x)-rg(y)$ &  $(rg(x)-rg(y))^2$ \\
+		\hline
+		174 & 73 & 4 & 3 & 1 & 1 \\
+		183 & 93 & 7 & 8 & -1 & 1\\
+		162 & 74 & 1 & 4 & -3 & 9 \\
+		170 & 58 & 2 & 1 & 1 & 1\\
+		182 & 90 & 6 & 6 & 0 & 0\\
+		176 & 88 & 5 & 5 & 0 & 0 \\
+		173 & 72 & 3 & 2 & 1 & 1\\
+		198 & 91 & 8 & 7 & 1 & 1\\
+		\hline
+		$\sum$ &&&&& 14
+	\end{tabular}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\begin{exampleblock}{Einfachere Berechnung von $r_{SP}$}
+	Für Daten $(x_i,y_i)$, $i=1,\dots,n$ mit $x_i\neq x_j$ und $y_i\neq y_j$ für alle $i,j$ gilt
+	\begin{align*}
+	r_{SP}&=1-\frac{6 \cdot \sum_{i=1}^{n} (rg(x_i)-rg(y_i))^2}{(n-1)\cdot n \cdot (n+1)}.
+	\end{align*}
+\end{exampleblock}
+\begin{align*}
+r_{SP}&=1-\frac{6 \cdot \sum_{i=1}^{8} (rg(x_i)-rg(y_i))^2}{(8-1)\cdot 8 \cdot (8+1)}\\
+&= 1-\frac{6 \cdot 14}{7\cdot 8 \cdot 9}\\
+&= \frac{5}{6}
+\end{align*}
+\end{frame}
+
+
+
+\end{document}

@@ -1,0 +1,320 @@
+\documentclass[t,11pt]{beamer}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usetikzlibrary{calc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{framed}
+\usecolortheme{orchid}
+\usepackage{etoolbox}
+\useinnertheme[shadow=true]{rounded}
+
+%%% PROGRESSBAR
+\definecolor{pbblue}{HTML}{D8D8D8}% filling color for the progress bar
+\definecolor{pbgray}{HTML}{F2F2F2}% background color for the progress bar
+\useoutertheme{infolines}
+\setbeamerfont{footline}{size=\normalsize}
+\setbeamersize{text margin left=30pt,text margin right=30pt}
+\makeatletter
+\setbeamertemplate{footline}
+{
+	\leavevmode%
+	\hbox{%
+		\begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.5ex,dp=1ex,center]{title in head/foot}%
+			\usebeamerfont{title in head/foot}\insertshorttitle
+		\end{beamercolorbox}%
+		\begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.5ex,dp=1ex,center]{date in head/foot}%
+			%\usebeamerfont{date in head/foot}\insertshortdate{}\hspace*{2em}
+			%\insertframenumber\hspace*{2ex} 
+		\end{beamercolorbox}
+		\begin{beamercolorbox}[wd=.333333\paperwidth,ht=3ex,dp=1ex,center]{author in head/foot}%
+			\usebeamerfont{author in head/foot}\insertshortauthor~~%\beamer@ifempty{\insertshortinstitute}{}{(\insertshortinstitute)}
+		\end{beamercolorbox}%
+	}%
+	\vskip0pt%
+}
+\makeatother
+\makeatletter
+\def\progressbar@progressbar{} % the progress bar
+\newcount\progressbar@tmpcounta% auxiliary counter
+\newcount\progressbar@tmpcountb% auxiliary counter
+\newdimen\progressbar@pbht %progressbar height
+\newdimen\progressbar@pbwd %progressbar width
+\newdimen\progressbar@tmpdim % auxiliary dimension
+\progressbar@pbwd=\linewidth
+\progressbar@pbht=1.5ex
+\def\progressbar@progressbar{%
+    \progressbar@tmpcounta=\insertframenumber
+    \progressbar@tmpcountb=\inserttotalframenumber
+    \progressbar@tmpdim=\progressbar@pbwd
+    \multiply\progressbar@tmpdim by \progressbar@tmpcounta
+    \divide\progressbar@tmpdim by \progressbar@tmpcountb
+  \begin{tikzpicture}[rounded corners=3pt,very thin]
+    \shade[top color=pbgray!20,bottom color=pbgray!20,middle color=pbgray!50]
+      (0pt, 0pt) rectangle ++ (\progressbar@pbwd, \progressbar@pbht);
+      \shade[draw=pbblue,top color=pbblue!50,bottom color=pbblue!50,middle color=pbblue] %
+        (0pt, 0pt) rectangle ++ (\progressbar@tmpdim, \progressbar@pbht);
+    \draw[color=normal text.fg!50]  
+      (0pt, 0pt) rectangle (\progressbar@pbwd, \progressbar@pbht) 
+        node[pos=0.5,color=normal text.fg] {\textnormal{%
+             \pgfmathparse{\insertframenumber*100/\inserttotalframenumber}%
+             \pgfmathprintnumber[fixed,precision=0]{\pgfmathresult}\,\%%
+        }%
+    };
+  \end{tikzpicture}%
+}
+\addtobeamertemplate{headline}{}
+{%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=4ex,center,dp=1ex]{white}%
+    \progressbar@progressbar%
+  \end{beamercolorbox}%
+}
+\makeatother
+
+
+%%% BLOCKS
+% block = Aufgabe
+\setbeamercolor{block title}{fg=black,bg=blue!30!white} 
+\setbeamercolor{block body}{fg=black, bg=blue!3!white}
+
+% alertblock = Definition
+\setbeamercolor{block title alerted}{fg=black,bg=red!50!white} 
+\setbeamercolor{block body alerted}{fg=black, bg=red!3!white}
+
+% exampleblock = Wiederholung
+\setbeamercolor{block title example}{fg=black,bg=green!30!white} 
+\setbeamercolor{block body example}{fg=black, bg=green!3!white}
+
+
+
+\begin{document}
+	%\author{www.oilbat.de}
+	%\title{Stochastik}
+	\subtitle{}
+	\logo{}
+	\institute{}
+	\date{}
+	\subject{}
+	\setbeamercovered{transparent}
+	\setbeamertemplate{navigation symbols}{}
+
+\addtocounter{framenumber}{-1}
+\setbeamercovered{invisible}
+
+\begin{frame}
+\begin{alertblock}{Neyman-Pearson Test: Ausgangssituation}
+	\begin{itemize}[<+->]
+		\item Wir haben eine \textit{iid} Stichprobe $X_1,X_2,\dots,X_n$.
+		\item Sie stammt entweder aus der Dichte $f_0$ oder $f_1$. Welche stimmt?
+		\item Entscheidungsfunktion $d:\mathbb{R}^n\to\{0,1 \}$
+		\begin{itemize}
+			\item $d(X_1,X_2,\dots,X_n)=0\Rightarrow$ wir entscheiden uns für $f_0$
+			\item $d(X_1,X_2,\dots,X_n)=1\Rightarrow$ wir entscheiden uns für $f_1$
+		\end{itemize}
+		\item Fehler 1. Art und Fehler 2. Art
+		\begin{itemize}
+			\item $\mathbf{P}(d=1\mid f_0$ stimmt$)=\alpha$
+			\item $\mathbf{P}(d=0\mid f_1$ stimmt$)=\beta$
+		\end{itemize}
+	\end{itemize}
+\end{alertblock}
+\end{frame}
+
+\begin{frame}
+\begin{alertblock}{Neyman-Pearson Test: Ausgangssituation}
+	\begin{itemize}%[<+->]
+		\item Wir haben eine \textit{iid} Stichprobe $X_1,X_2,\dots,X_n$.
+		\item Sie stammt entweder aus der Dichte $f_0$ oder $f_1$. Welche stimmt?
+		\item Entscheidungsfunktion $d:\mathbb{R}^n\to\{0,1 \}$
+		\begin{itemize}
+			\item $d(X_1,X_2,\dots,X_n)=0\Rightarrow$ wir entscheiden uns für $f_0$
+			\item $d(X_1,X_2,\dots,X_n)=1\Rightarrow$ wir entscheiden uns für $f_1$
+		\end{itemize}
+		\item Fehler 1. Art und Fehler 2. Art
+		\begin{itemize}
+			\item $\mathbf{P}(d=1\mid f_0$ stimmt$)=\alpha$
+			\item $\mathbf{P}(d=0\mid f_1$ stimmt$)=\beta$
+		\end{itemize}
+	\end{itemize}
+\end{alertblock}
+\begin{exampleblock}{Unser Ziel}
+	Finde einen Test, der 
+	\begin{itemize}
+		\item maximal mit Wahrscheinlichkeit $\alpha$ einen Fehler 1. Art macht,
+		\item die Wahrscheinlichkeit $\beta$ für einen Fehler 2. Art minimiert.
+	\end{itemize}
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}
+	\begin{alertblock}{Die Idee von Neyman und Pearson}
+		\begin{itemize}[<+->]
+			\item Falls $f_1(X_1,X_2,\dots,X_n)$ deutlich größer ist als $f_0(X_1,X_2,\dots,X_n)$, so scheint $f_1$ die korrekte Dichte zu sein (Maximum-Likelihood Prinzip).
+			\item Betrachte den Likelihood-Quotienten $$\frac{f_1(X_1,X_2,\dots,X_n)}{f_0(X_1,X_2,\dots,X_n)}.$$
+			\item Falls dieser größer als ein Schwellwert $K$ ist, so entscheide dich für $f_1$, ansonsten entscheide dich für $f_0$.
+			\item Wähle $K$ so, dass
+			$$ \mathbf{P}\left(\frac{f_1(X_1,X_2,\dots,X_n)}{f_0(X_1,X_2,\dots,X_n)}>K~\bigg\vert~ f_0\text{ stimmt}\right)=\alpha .$$
+		\end{itemize}
+	\end{alertblock}
+\end{frame}
+
+\begin{frame}
+	\begin{alertblock}{Das Neyman-Pearson Lemma}
+		Gegeben
+		\begin{itemize}
+			\item $H_0:$ Wahre Dichte ist $f_0$, $H_1:$ Wahre Dichte ist $f_1$
+			\item Signifikanzniveau $\alpha$
+			\item Schwellwert $K$, sodass $ \mathbf{P}\left(\frac{f_1(X_1,X_2,\dots,X_n)}{f_0(X_1,X_2,\dots,X_n)}>K~\bigg\vert~ f_0\text{ stimmt}\right)=\alpha $
+			\item Entscheidungsregel $d$, sodass
+			\begin{itemize}
+				\item $\frac{f_1(X_1,X_2,\dots,X_n)}{f_0(X_1,X_2,\dots,X_n)}<K \Rightarrow d=0$
+				\item $\frac{f_1(X_1,X_2,\dots,X_n)}{f_0(X_1,X_2,\dots,X_n)}>K \Rightarrow d=1$
+			\end{itemize}
+		\end{itemize}
+			Dann 
+			\begin{itemize}
+				\item ist $d$ ein Test, der unter allen Tests zum Signifikanzniveau $\alpha$ den Fehler 2. Art minimiert. (Neyman-Pearson Test)
+			\end{itemize}
+	\end{alertblock}
+\end{frame}
+
+
+\begin{frame}
+	\begin{block}{Beispiel: IQ-Werte}
+		\begin{itemize}[<+->]
+			\item IQ-Werte von Erwachsenen seien normalverteilt mit $\mu_0=100$ und $\sigma^2 =15$
+			\item Es wird behauptet, dass Studenten im Schnitt einen um 10\% höheren IQ besitzen als der durchschnittliche Erwachsene
+			\item Teste also
+			\begin{itemize}
+				\item $H_0:$ $\mathcal{N}(\mu_0=100,\sigma^2=15)$ gegen
+				\item $H_1:$ $\mathcal{N}(\mu_1=110,\sigma^2=15)$
+			\end{itemize}
+			\item wähle Signifikanzniveau, z.B. $\alpha=5\%$
+			\item Gegeben seien die IQ-Werte $X_1,X_2,\dots,X_{10}$.
+			\item Deren gemeinsame Dichte ist (mit $\sigma^2=15$ und $j=0,1$)
+			$$f_j(X_1,X_2,\dots,X_{10})=\prod_{i=1}^{10}\frac{1}{\sqrt{2\pi\sigma^2}}\exp \left[-\frac{(X_i-\mu_j)^2}{2\sigma^2}\right]$$
+		\end{itemize}
+	\end{block}
+\end{frame}
+
+\begin{frame}
+Mittels einiger Umformungen:
+\begin{align*}
+&f_j(X_1,X_2,\dots,X_{10})\\&=\prod_{i=1}^{10}\frac{1}{\sqrt{2\pi\sigma^2}}\exp \left[-\frac{(X_i-\mu_j)^2}{2\sigma^2}\right]\\
+&= ...\\
+&= \left( \frac{1}{\sqrt{2\pi\sigma^2}} \right)^{10}\exp \left[ -\frac{1}{2\sigma^2} \left( \sum_{i=1}^{10} X_i^2 - 20\mu_j\bar{X} + 10\mu_j^2  \right)  \right] 
+\end{align*} 
+\end{frame}
+
+\begin{frame}
+	Mittels einiger Umformungen:
+	\begin{align*}
+		&f_j(X_1,X_2,\dots,X_{10})\\&=\prod_{i=1}^{10}\frac{1}{\sqrt{2\pi\sigma^2}}\exp \left[-\frac{(X_i-\mu_j)^2}{2\sigma^2}\right]\\
+		&= ...\\
+		&= \left( \frac{1}{\sqrt{2\pi\sigma^2}} \right)^{10}\exp \left[ -\frac{1}{2\sigma^2} \left( \sum_{i=1}^{10} X_i^2 - 20\mu_j\bar{X} + 10\mu_j^2  \right)  \right] 
+	\end{align*} 
+	Damit erhalten wir den Likelihood-Quotienten: 
+	\begin{align*}
+		\frac{f_1(X_1,X_2,\dots,X_{10})}{f_0(X_1,X_2,\dots,X_{10})}&=\exp \left[ - \frac{1}{2\sigma^2} \left( -20(\mu_1-\mu_0)\bar{X}+10(\mu_1^2-\mu_0^2)  \right)  \right] \\
+		&= \exp \left[ \frac{20}{3}\bar{X}-7000  \right]
+	\end{align*}
+	(Beachte: $\sigma^2=15,\mu_0=100,\mu_1=110$)
+\end{frame}
+
+\begin{frame}
+Wir müssen jetzt den Schwellwert $K$ finden, sodass unter $H_0$
+\begin{align*}
+\mathbf{P}\left(\frac{f_1(X_1,X_2,\dots,X_{10})}{f_0(X_1,X_2,\dots,X_{10})}>K~\bigg\vert~ f_0\text{ stimmt}\right)=\alpha, 
+\end{align*}
+also
+\begin{align*}
+\mathbf{P}\left(\exp \left[ \frac{20}{3}\bar{X}-7000  \right]>K~\bigg\vert~ f_0\text{ stimmt}\right)=5\%.
+\end{align*}
+\end{frame}
+
+\begin{frame}
+	Wir müssen jetzt den Schwellwert $K$ finden, sodass unter $H_0$
+	\begin{align*}
+		\mathbf{P}\left(\frac{f_1(X_1,X_2,\dots,X_{10})}{f_0(X_1,X_2,\dots,X_{10})}>K~\bigg\vert~ f_0\text{ stimmt}\right)=\alpha, 
+	\end{align*}
+	also
+	\begin{align*}
+	\mathbf{P}\left(\exp \left[ \frac{20}{3}\bar{X}-7000  \right]>K~\bigg\vert~ f_0\text{ stimmt}\right)=5\%.
+	\end{align*}
+	Es gilt
+	\begin{align*}
+		\exp \left[ \frac{20}{3}\bar{X}-7000  \right]>K \Leftrightarrow \bar{X}>\frac{3}{20}(7000+\ln(K)).
+	\end{align*}
+\end{frame}
+
+\begin{frame}
+Wir müssen jetzt den Schwellwert $K$ finden, sodass unter $H_0$
+\begin{align*}
+\mathbf{P}\left(\frac{f_1(X_1,X_2,\dots,X_{10})}{f_0(X_1,X_2,\dots,X_{10})}>K~\bigg\vert~ f_0\text{ stimmt}\right)=\alpha, 
+\end{align*}
+also
+\begin{align*}
+\mathbf{P}\left(\exp \left[ \frac{20}{3}\bar{X}-7000  \right]>K~\bigg\vert~ f_0\text{ stimmt}\right)=5\%.
+\end{align*}
+Es gilt
+\begin{align*}
+\exp \left[ \frac{20}{3}\bar{X}-7000  \right]>K \Leftrightarrow \bar{X}>\frac{3}{20}(7000+\ln(K)).
+\end{align*}
+Unter $H_0$ gilt
+\begin{align*}
+\bar{X}\sim \mathcal{N}\left(\mu_0=100,\sigma^2=\frac{15}{10}\right)
+\end{align*}
+\end{frame}
+
+\begin{frame}
+Wir müssen also $K$ so wählen, dass
+\begin{align*}
+\mathbf{P}\left(\bar{X}>\frac{3}{20}(7000+\ln(K))\right)=5\%, 
+\end{align*}
+unter der Bedingung, dass $\bar{X}\sim \mathcal{N}(\mu_0=100,\sigma^2=\frac{15}{10})$. 
+
+\end{frame}
+
+\begin{frame}
+Wir müssen also $K$ so wählen, dass
+\begin{align*}
+\mathbf{P}\left(\bar{X}>\frac{3}{20}(7000+\ln(K))\right)=5\%, 
+\end{align*}
+unter der Bedingung, dass $\bar{X}\sim \mathcal{N}(\mu_0=100,\sigma^2=\frac{15}{10})$. 
+
+\vspace{0.5cm}
+
+Mit anderen Worten, wir suchen das 95\%-Quantil der $\mathcal{N}(\mu_0=100,\sigma^2=\frac{15}{10})$-Verteilung. Dies ist
+
+\begin{center}
+	\texttt{qnorm(0.95,mean=100,sd=sqrt(1.5))}$=102$
+\end{center}
+
+\end{frame}
+
+\begin{frame}
+	Wir müssen also $K$ so wählen, dass
+	\begin{align*}
+		\mathbf{P}\left(\bar{X}>\frac{3}{20}(7000+\ln(K))\right)=5\%, 
+	\end{align*}
+	unter der Bedingung, dass $\bar{X}\sim \mathcal{N}(\mu_0=100,\sigma^2=\frac{15}{10})$. 
+	
+	\vspace{0.5cm}
+	
+	Mit anderen Worten, wir suchen das 95\%-Quantil der $\mathcal{N}(\mu_0=100,\sigma^2=\frac{15}{10})$-Verteilung. Dies ist
+	
+	\begin{center}
+		\texttt{qnorm(0.95,mean=100,sd=sqrt(1.5))}$=102$
+	\end{center}
+
+	Damit haben wir den Neyman-Pearson Test gefunden:
+	
+	\vspace{0.5cm}
+	
+	Verwerfe $H_0:$ $\mathcal{N}(\mu_0=100,\sigma^2=15)$ (bzw. $d=1$), falls $\bar{X}>102$.
+	
+\end{frame}
+
+
+\end{document}

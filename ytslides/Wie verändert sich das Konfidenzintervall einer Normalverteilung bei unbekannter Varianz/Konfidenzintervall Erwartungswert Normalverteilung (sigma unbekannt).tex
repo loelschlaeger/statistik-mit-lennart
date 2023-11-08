@@ -1,0 +1,216 @@
+\documentclass[t,11pt]{beamer}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usetikzlibrary{calc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{framed}
+\usecolortheme{orchid}
+\usepackage{etoolbox}
+\useinnertheme[shadow=true]{rounded}
+
+%%% PROGRESSBAR
+\definecolor{pbblue}{HTML}{D8D8D8}% filling color for the progress bar
+\definecolor{pbgray}{HTML}{F2F2F2}% background color for the progress bar
+\useoutertheme{infolines}
+\setbeamerfont{footline}{size=\normalsize}
+\setbeamersize{text margin left=30pt,text margin right=30pt}
+\makeatletter
+\setbeamertemplate{footline}
+{
+	\leavevmode%
+	\hbox{%
+		\begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.5ex,dp=1ex,center]{title in head/foot}%
+			\usebeamerfont{title in head/foot}\insertshorttitle
+		\end{beamercolorbox}%
+		\begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.5ex,dp=1ex,center]{date in head/foot}%
+			%\usebeamerfont{date in head/foot}\insertshortdate{}\hspace*{2em}
+			%\insertframenumber\hspace*{2ex} 
+		\end{beamercolorbox}
+		\begin{beamercolorbox}[wd=.333333\paperwidth,ht=3ex,dp=1ex,center]{author in head/foot}%
+			\usebeamerfont{author in head/foot}\insertshortauthor~~%\beamer@ifempty{\insertshortinstitute}{}{(\insertshortinstitute)}
+		\end{beamercolorbox}%
+	}%
+	\vskip0pt%
+}
+\makeatother
+\makeatletter
+\def\progressbar@progressbar{} % the progress bar
+\newcount\progressbar@tmpcounta% auxiliary counter
+\newcount\progressbar@tmpcountb% auxiliary counter
+\newdimen\progressbar@pbht %progressbar height
+\newdimen\progressbar@pbwd %progressbar width
+\newdimen\progressbar@tmpdim % auxiliary dimension
+\progressbar@pbwd=\linewidth
+\progressbar@pbht=1.5ex
+\def\progressbar@progressbar{%
+    \progressbar@tmpcounta=\insertframenumber
+    \progressbar@tmpcountb=\inserttotalframenumber
+    \progressbar@tmpdim=\progressbar@pbwd
+    \multiply\progressbar@tmpdim by \progressbar@tmpcounta
+    \divide\progressbar@tmpdim by \progressbar@tmpcountb
+  \begin{tikzpicture}[rounded corners=3pt,very thin]
+    \shade[top color=pbgray!20,bottom color=pbgray!20,middle color=pbgray!50]
+      (0pt, 0pt) rectangle ++ (\progressbar@pbwd, \progressbar@pbht);
+      \shade[draw=pbblue,top color=pbblue!50,bottom color=pbblue!50,middle color=pbblue] %
+        (0pt, 0pt) rectangle ++ (\progressbar@tmpdim, \progressbar@pbht);
+    \draw[color=normal text.fg!50]  
+      (0pt, 0pt) rectangle (\progressbar@pbwd, \progressbar@pbht) 
+        node[pos=0.5,color=normal text.fg] {\textnormal{%
+             \pgfmathparse{\insertframenumber*100/\inserttotalframenumber}%
+             \pgfmathprintnumber[fixed,precision=0]{\pgfmathresult}\,\%%
+        }%
+    };
+  \end{tikzpicture}%
+}
+\addtobeamertemplate{headline}{}
+{%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=4ex,center,dp=1ex]{white}%
+    \progressbar@progressbar%
+  \end{beamercolorbox}%
+}
+\makeatother
+
+
+%%% BLOCKS
+% block = Aufgabe
+\setbeamercolor{block title}{fg=black,bg=blue!30!white} 
+\setbeamercolor{block body}{fg=black, bg=blue!3!white}
+
+% alertblock = Definition
+\setbeamercolor{block title alerted}{fg=black,bg=red!50!white} 
+\setbeamercolor{block body alerted}{fg=black, bg=red!3!white}
+
+% exampleblock = Wiederholung
+\setbeamercolor{block title example}{fg=black,bg=green!30!white} 
+\setbeamercolor{block body example}{fg=black, bg=green!3!white}
+
+
+
+\begin{document}
+	%\author{www.oilbat.de}
+	%\title{Stochastik}
+	\subtitle{}
+	\logo{}
+	\institute{}
+	\date{}
+	\subject{}
+	\setbeamercovered{transparent}
+	\setbeamertemplate{navigation symbols}{}
+
+\addtocounter{framenumber}{-1}
+\setbeamercovered{invisible}
+
+\begin{frame}
+\begin{block}{Aufgabe}
+	Wir wollen annehmen, dass sich die Akkuladedauer für Handys gut durch eine Normalverteilung beschreiben lässt. Wir beobachten folgenden Ladedauern (in Minuten):
+	\begin{align*}
+		106,~108,~113,~95,~102,~94,~101,~97,~98,~96 
+	\end{align*}
+	Ermitteln Sie ein 95\%-KI für den Erwartungswert~$\mu$.
+\end{block}
+\end{frame}
+
+\begin{frame}
+\begin{block}{Aufgabe}
+	Wir wollen annehmen, dass sich die Akkuladedauer für Handys gut durch eine Normalverteilung beschreiben lässt. Wir beobachten folgenden Ladedauern (in Minuten):
+	\begin{align*}
+	106,~108,~113,~95,~102,~94,~101,~97,~98,~96 
+	\end{align*}
+	Ermitteln Sie ein 95\%-KI für den Erwartungswert~$\mu$.
+\end{block}
+\begin{alertblock}{Definition: $1-\alpha$-KI für $\mu$ falls $\sigma$ unbekannt ist}
+	\begin{align*}
+	\left[ \bar{X} - t_{1-\alpha/2; n-1} \frac{S}{\sqrt{n}};~\bar{X} + t_{1-\alpha/2; n-1} \frac{S}{\sqrt{n}} \right]
+	\end{align*}
+	\vspace{-0.5cm}
+	\begin{itemize}
+		\item $S=\sqrt{\frac{1}{n-1}\sum_{i=1}^{n}(X_i-\bar{X})^2}$
+		\item $t_{1-\alpha/2; n-1}$ ist das $1-\alpha/2$-Quantil der t-Verteilung mit $n-1$ Freiheitsgeraden
+	\end{itemize}
+\end{alertblock}
+\end{frame}
+
+\begin{frame}
+\begin{align*}
+\frac{\bar{X}-\mu}{S/\sqrt{n}}\sim t_{n-1}
+\end{align*}
+\end{frame}
+
+\begin{frame}
+\begin{align*}
+\frac{\bar{X}-\mu}{S/\sqrt{n}}\sim t_{n-1}
+\end{align*}
+\begin{align*}
+1-\alpha &= P(-t_{1-\alpha/2; n-1} \leq \frac{\bar{X}-\mu}{S/\sqrt{n}} \leq t_{1-\alpha/2; n-1} ) \\
+&= P(-t_{1-\alpha/2; n-1}  \frac{S}{\sqrt{n}}\leq \bar{X}-\mu \leq t_{1-\alpha/2; n-1} \frac{S}{\sqrt{n}}) \\
+&= P(\bar{X} -t_{1-\alpha/2; n-1}  \frac{S}{\sqrt{n}}\leq \mu \leq \bar{X} + t_{1-\alpha/2; n-1}  \frac{S}{\sqrt{n}})
+\end{align*}
+\end{frame}
+
+\begin{frame}
+\begin{align*}
+\frac{\bar{X}-\mu}{S/\sqrt{n}}\sim t_{n-1}
+\end{align*}
+\begin{align*}
+1-\alpha &= P(-t_{1-\alpha/2; n-1} \leq \frac{\bar{X}-\mu}{S/\sqrt{n}} \leq t_{1-\alpha/2; n-1} ) \\
+&= P(-t_{1-\alpha/2; n-1}  \frac{S}{\sqrt{n}}\leq \bar{X}-\mu \leq t_{1-\alpha/2; n-1} \frac{S}{\sqrt{n}}) \\
+&= P(\bar{X} -t_{1-\alpha/2; n-1}  \frac{S}{\sqrt{n}}\leq \mu \leq \bar{X} + t_{1-\alpha/2; n-1}  \frac{S}{\sqrt{n}})
+\end{align*}
+\begin{align*}
+\left[ \bar{X} - t_{1-\alpha/2; n-1} \frac{S}{\sqrt{n}};~\bar{X} + t_{1-\alpha/2; n-1} \frac{S}{\sqrt{n}} \right]
+\end{align*}
+\end{frame}
+
+\begin{frame}
+	\begin{block}{Aufgabe}
+		Wir wollen annehmen, dass sich die Akkuladedauer für Handys gut durch eine Normalverteilung beschreiben lässt. Wir beobachten folgenden Ladedauern (in Minuten):
+		\begin{align*}
+		106,~108,~113,~95,~102,~94,~101,~97,~98,~96 
+		\end{align*}
+		Ermitteln Sie ein 95\%-KI für den Erwartungswert~$\mu$.
+	\end{block}
+	\begin{itemize}
+		\item Arithmetisches Stichprobenmittel: $\bar{x} = 101$
+		\item Irrtumsniveau: $\alpha=5\%$
+		\item Stichprobenumfang ist $n=10$
+		\item Quantil $t_{1-\alpha/2; n-1} = t_{0,975;9} = 2,26$
+		\item Die \textbf{geschätzte} Standardabweichung ist $s=6,27$
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+\begin{itemize}
+	\item Arithmetisches Stichprobenmittel: $\bar{x} = 101$
+	\item Irrtumsniveau: $\alpha=5\%$
+	\item Stichprobenumfang ist $n=10$
+	\item Quantil $t_{1-\alpha/2; n-1} = t_{0,975;9} = 2,26$
+	\item Die \textbf{geschätzte} Standardabweichung ist $s=6,27$
+\end{itemize}
+\begin{alertblock}{Definition: $1-\alpha$-KI für $\mu$ falls $\sigma$ unbekannt ist}
+	\begin{align*}
+	\left[ \bar{X} - t_{1-\alpha/2; n-1} \frac{S}{\sqrt{n}};~\bar{X} + t_{1-\alpha/2; n-1} \frac{S}{\sqrt{n}} \right]
+	\end{align*}
+\end{alertblock}
+\end{frame}
+
+\begin{frame}
+\begin{itemize}
+	\item Arithmetisches Stichprobenmittel: $\bar{x} = 101$
+	\item Irrtumsniveau: $\alpha=5\%$
+	\item Stichprobenumfang ist $n=10$
+	\item Quantil $t_{1-\alpha/2; n-1} = t_{0,975;9} = 2,26$
+	\item Die \textbf{geschätzte} Standardabweichung ist $s=6,27$
+\end{itemize}
+\begin{alertblock}{Definition: $1-\alpha$-KI für $\mu$ falls $\sigma$ unbekannt ist}
+	\begin{align*}
+	\left[ \bar{X} - t_{1-\alpha/2; n-1} \frac{S}{\sqrt{n}};~\bar{X} + t_{1-\alpha/2; n-1} \frac{S}{\sqrt{n}} \right]
+	\end{align*}
+\end{alertblock}
+\begin{align*}
+\left[ 101 - 2,26\cdot \frac{6,27}{\sqrt{10}};~ 101 + 2,26\cdot \frac{6,27}{\sqrt{10}} \right] = \left[ 96,5;~105,5 \right]
+\end{align*}
+\end{frame}
+
+\end{document}

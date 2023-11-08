@@ -1,0 +1,139 @@
+\documentclass[t,11pt,aspectratio=169]{beamer}
+\input{header}
+
+\begin{document}
+
+\begin{frame}
+\begin{block}{Beispiel 1 (Gleichverteilung)}
+	Wir haben die folgenden 10 unabhängigen Realisationen einer Gleichverteilung auf dem Intervall $[0,\theta]$ gegeben:
+	$$0.6 \ \ 5.5 \ \ 0.9 \ \ 4.5 \ \ 6.6 \ \ 2.0 \ \ 3.3 \ \ 5.0 \ \ 3.5 \ \ 3.1$$
+	Schätze mit Hilfe der Momentenmethode den Wert von $\theta$.
+\end{block}
+\end{frame}
+
+\begin{frame}
+\begin{exampleblock}{Fahrplan für die Momentenmethode}
+\begin{enumerate}[<+->]
+	\item Gegeben seien $X_1,\dots,X_n$ unabhängig und identisch verteilte Zufallsvariablen.
+	\item Wir kennen die Verteilung, aber ein oder mehrere Parameter sind unbekannt. Diese wollen wir schätzen.
+	\item Wir bestimmen die ersten $k$ theoretischen Momente $\mathbb{E}(X^k)$ der Verteilung und ermitteln einen Zusammenhang zu den gesuchten Parametern.
+	\item Wir ersetzen die theoretischen Momente $\mathbb{E}(X^k)$ durch die empirischen Momente $\frac{1}{n}\sum_{i=1}^{n}X_i^k$ und lösen nach den gesuchten Parametern auf.
+	\item Wir erhalten einen Ausdruck, der die gesuchten Parameter durch die empirischen Momente erklärt. Diesen nennen wir Momentenschätzer.
+\end{enumerate}
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}
+\begin{enumerate}[<+->]
+\item $X_1,\dots,X_n$ \textit{iid} gleichverteilt auf dem Intervall $[0,\theta]$
+\item wir wollen $\theta$ schätzen
+\item erstes theoretisches Moment ($k=1$): 
+\begin{align*}
+\mathbb{E}(X) &= \frac{\theta}{2} \\
+\Longleftrightarrow \ \ \theta &= 2\cdot \mathbb{E}(X)
+\end{align*}
+\item erstes empirisches Moment ($k=1$):
+\begin{align*}
+\frac{1}{n}\sum_{i=1}^{n}X_i
+\end{align*}
+\item theoretisches durch empirisches Moment ersetzen:
+\begin{align*}
+\hat{\theta}_{MM} &= 2\cdot\frac{1}{n}\sum_{i=1}^{n}X_i=2\cdot \bar{X}
+\end{align*}
+
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\begin{block}{Beispiel 1 (Gleichverteilung)}
+	Wir haben die folgenden 10 unabhängigen Realisationen einer Gleichverteilung auf dem Intervall $[0,\theta]$ gegeben:
+	$$0.6 \ \ 5.5 \ \ 0.9 \ \ 4.5 \ \ 6.6 \ \ 2.0 \ \ 3.3 \ \ 5.0 \ \ 3.5 \ \ 3.1$$
+	Schätze mit Hilfe der Momentenmethode den Wert von $\theta$.
+\end{block}
+\pause 
+\begin{align*}
+\hat{\theta}_{MM} &= 2\cdot\frac{1}{n}\sum_{i=1}^{n}X_i = 2\cdot 3.5 = 7
+\end{align*}
+\end{frame}
+
+\begin{frame}
+\begin{block}{Beispiel 2 (Poisson Verteilung)}
+	Gegeben seien $X_1,\dots,X_n\overset{iid}{\sim}Poi(\lambda)$. Bestimme den Momentenschätzer $\hat{\lambda}_{MM}$ für den Parameter $\lambda$.
+\end{block}
+\pause
+Wir wissen bereits:
+\begin{align*}
+\hat{\lambda}_{ML}=\frac{1}{n} \sum_{i=1}^{n} X_i=\bar{X}
+\end{align*}
+\pause
+Aber was ist mit $\hat{\lambda}_{MM}$?
+\end{frame}
+
+\begin{frame}
+\begin{enumerate}[<+->]
+\item $X_1,\dots,X_n\overset{iid}{\sim}Poi(\lambda)$
+\item wir wollen $\lambda$ schätzen
+\item erstes theoretisches Moment ($k=1$):
+\begin{itemize}
+\item $\mathbb{E}(X) = \lambda	$
+\end{itemize}
+\item erstes empirisches Moment ($k=1$):
+\begin{itemize}
+\item $\frac{1}{n}\sum_{i=1}^{n}X_i$
+\end{itemize}
+\item theoretisches durch empirisches Moment ersetzen:
+\begin{align*}
+\hat{\lambda}_{MM} &= \frac{1}{n}\sum_{i=1}^{n}X_i
+\end{align*}
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\begin{block}{Beispiel 2 (Poisson Verteilung)}
+	Gegeben seien $X_1,\dots,X_n\overset{iid}{\sim}Poi(\lambda)$. Bestimme den Momentenschätzer $\hat{\lambda}_{MM}$ für den Parameter $\lambda$.
+\end{block}
+\begin{align*}
+\hat{\lambda}_{ML}&=\frac{1}{n} \sum_{i=1}^{n} X_i=\bar{X} \\
+\hat{\lambda}_{MM}&=\frac{1}{n} \sum_{i=1}^{n} X_i=\bar{X} \\
+\end{align*}
+\end{frame}
+
+\begin{frame}
+\begin{block}{Beispiel 3 (Normalverteilung)}
+	Seien $X_1,\dots,X_n\overset{iid}{\sim}\mathcal{N}(\mu,\sigma^2)$. Bestimme die Momentenschätzer $\hat{\mu}_{MM}$ und $\hat{\sigma^2}_{MM}$.
+\end{block}
+\end{frame}
+
+\begin{frame}
+\begin{enumerate}[<+->]
+\item $X_1,\dots,X_n\overset{iid}{\sim}\mathcal{N}(\mu,\sigma^2)$
+\item wir wollen $\mu$ und $\sigma^2$ schätzen
+\item erstes und zweites theoretisches Moment ($k=1$ und $k=2$):
+\begin{itemize}
+\item $\mathbb{E}(X) = \mu	$
+\item $\mathbb{V}(X)=\mathbb{E}(X^2)-\mathbb{E}(X)^2$
+\item[] $ \Longleftrightarrow \mathbb{E}(X^2) = \mathbb{V}(X) + \mathbb{E}(X)^2 = \sigma^2 + \mu^2$
+\end{itemize}
+\item erstes und zweites empirisches Moment ($k=1$ und $k=2$):
+\begin{itemize}
+\item $k=1$: $\frac{1}{n}\sum_{i=1}^{n}X_i$, $k=2$: $\frac{1}{n}\sum_{i=1}^{n}X_i^2$
+\end{itemize}
+\item theoretisches durch empirisches Moment ersetzen:
+\begin{align*}
+\hat{\mu}_{MM} &= \frac{1}{n}\sum_{i=1}^{n}X_i\\
+\hat{\sigma^2}_{MM} &= \frac{1}{n}\sum_{i=1}^{n}X_i^2 - \left(\frac{1}{n}\sum_{i=1}^{n}X_i\right)^2
+\end{align*}
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\begin{block}{Beispiel 3 (Normalverteilung)}
+	Seien $X_1,\dots,X_n\overset{iid}{\sim}\mathcal{N}(\mu,\sigma^2)$. Bestimme die Momentenschätzer $\hat{\mu}_{MM}$ und $\hat{\sigma^2}_{MM}$.
+\end{block}
+\begin{align*}
+\hat{\mu}_{MM} &= \frac{1}{n}\sum_{i=1}^{n}X_i\\
+\hat{\sigma^2}_{MM} &= \frac{1}{n}\sum_{i=1}^{n}X_i^2 - \left(\frac{1}{n}\sum_{i=1}^{n}X_i\right)^2
+\end{align*}
+\end{frame}
+
+\end{document}

@@ -1,0 +1,63 @@
+\documentclass[t,11pt,aspectratio=169]{beamer}
+\input{header}
+
+\begin{document}
+	
+\begin{frame}
+\begin{block}{Der Binomialtest}
+	\begin{itemize}[<+->]
+		\item Er testet Hypothesen für die unbekannte Wahrscheinlichkeit $p$ eines Merkmals in der Grundgesamtheit.
+		\item Mögliche Hypothesen:
+		\begin{itemize}
+			\item zweiseitig: $H_0:p = p_0$ und $H_1:p \neq p_0$
+			\item linksseitig: $H_0:p \leq p_0$ und $H_1:p > p_0$
+			\item rechtsseitig: $H_0:p \geq p_0$ und $H_1:p < p_0$
+		\end{itemize}
+		\item Die Teststatistik ist die Anzahl, wie oft das Merkmal in einer zufälligen Stichprobe vom Umfang $n$ vorkommt.
+		\item Verteilung der Teststatistik unter $H_0$: Binomialverteilung mit $n$ und $p_0$
+	\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\begin{block}{Aufgabe}
+	Ein Losverkäufer behauptet, dass mindestens 20\% der Lose aus seiner Lostrommel Gewinne seien. Die Käufer meinen aber, dass der Anteil wesentlich geringer ist. Es werden daraufhin 100 Lose überprüft. \\ Führe einen Binomialtest zu dem Irrtumsniveau 5\% durch.
+\end{block}
+\pause
+\begin{itemize}
+	\item Nullhypothese $H_0:p\geq 0,2$
+	\item Gegenhypothese $H_1:$ $p < 0,2$
+	\item Stichprobenumfang $n=100$
+	\item Testgröße $X$: Anzahl der Gewinnlose in der Stichprobe
+	\item Verteilung von $X$ unter $H_0$: Binomialverteilung mit $n=100$ und $p_0=0,2$
+	\pause
+	\item Ablehnungsbereich: $\{0,\dots,a \}$
+	\item Annahmebereich: $\{a+1,\dots, 100 \}$
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\vfill
+Wie müssen wir $a$ wählen?
+\vfill
+\begin{itemize}[<+->]
+\item Irrtumsniveau $\alpha=5\%$ = Fehler 1. Art (d.h. $H_0$ verwerfen, obwohl $H_0$ stimmt) 
+\item $\mathbf{P}(X\in \{0,\dots,a \})=\mathbf{P}(X\leq a) \leq 0,05$ sofern $H_0$ stimmt
+\item[] \begin{center}
+			\begin{tabular}{r|l}
+				$a$ & $\mathbf{P}(X\leq a) =$ \texttt{pbinom(a, size = 100, prob = 0.2)} \\
+				\hline
+				20 & 0.5595\\
+				15 & 0.1285\\
+				10 & 0.0056\\
+				\textbf{13} & \textbf{0.0469}\\
+				14 & 0.0804
+			\end{tabular}
+		\end{center}
+\item Ablehnungsbereich: $\{0,\dots,13 \}$, Annahmebereich: $\{14,\dots, 100 \}$
+\item[] Das heißt: Wenn wir höchstens 13 Gewinne in den 100 gezogenen Losen finden, haben wir den Losverkäufer (zu dem Irrtumsniveau von 5\%) überführt.
+\end{itemize}
+\vfill
+\end{frame}
+
+\end{document}

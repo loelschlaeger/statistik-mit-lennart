@@ -1,0 +1,150 @@
+\documentclass[t,11pt,aspectratio=169]{beamer}
+\input{header}
+
+\begin{document}
+
+\begin{frame}
+Ausgangssituation:
+$$ X_1,\dots,X_n\sim \mathcal{N}(\mu,\sigma^2)\text{~iid} $$
+\pause
+
+Folgende Hypothesen können wir testen:
+\begin{itemize}
+\item[a)] $H_0:\mu=\mu_0,~H_1:\mu\neq\mu_0$
+\item[b)] $H_0:\mu\geq\mu_0,~H_1:\mu< \mu_0$
+\item[c)] $H_0:\mu\leq\mu_0,~H_1:\mu > \mu_0$
+\end{itemize}
+\vspace{0.4cm}
+\pause
+
+Teststatistik:
+$$ T=\frac{\bar{X}-\mu_0}{S}\sqrt{n},~\text{wobei}~S=\sqrt{\frac{1}{n-1}\sum_{i=1}^{n}(X_i-\bar{X})^2} $$
+\pause
+
+Verteilung der Teststatistik (für $\mu=\mu_0$):
+$$T\sim t_{n-1}$$
+\end{frame}
+
+\begin{frame}
+\begin{itemize}
+\item[a)] $H_0:\mu=\mu_0,~H_1:\mu\neq\mu_0$ \hfill $T=\frac{\bar{X}-\mu_0}{S}\sqrt{n}\sim t_{n-1}$ \hfill
+\end{itemize}
+\begin{center}
+\includegraphics[scale=0.4]{1.png}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\begin{itemize}
+\item[a)] $H_0:\mu=\mu_0,~H_1:\mu\neq\mu_0$ \hfill $T=\frac{\bar{X}-\mu_0}{S}\sqrt{n}\sim t_{n-1}$ \hfill
+\end{itemize}
+\begin{center}
+\includegraphics[scale=0.4]{2.png}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\begin{itemize}
+\item[a)] $H_0:\mu=\mu_0,~H_1:\mu\neq\mu_0$ \hfill $T=\frac{\bar{X}-\mu_0}{S}\sqrt{n}\sim t_{n-1}$ \hfill
+\end{itemize}
+\begin{center}
+\includegraphics[scale=0.4]{3.png}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\begin{itemize}
+\item[a)] $H_0:\mu=\mu_0,~H_1:\mu\neq\mu_0$ \hfill $T=\frac{\bar{X}-\mu_0}{S}\sqrt{n}\sim t_{n-1}$ \hfill
+\end{itemize}
+\begin{center}
+\includegraphics[scale=0.4]{4.png}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\begin{itemize}
+\item[a)] $H_0:\mu=\mu_0,~H_1:\mu\neq\mu_0$ \hfill $T=\frac{\bar{X}-\mu_0}{S}\sqrt{n}\sim t_{n-1}$ \hfill
+\end{itemize}
+\begin{center}
+\includegraphics[scale=0.4]{5.png}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\begin{itemize}
+\item[b)] $H_0:\mu\geq\mu_0,~H_1:\mu< \mu_0$ \hfill $T=\frac{\bar{X}-\mu_0}{S}\sqrt{n}\sim t_{n-1}$ \hfill
+\end{itemize}
+\begin{center}
+\includegraphics[scale=0.4]{6.png}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\begin{itemize}
+\item[c)] $H_0:\mu\leq\mu_0,~H_1:\mu > \mu_0$ \hfill $T=\frac{\bar{X}-\mu_0}{S}\sqrt{n}\sim t_{n-1}$ \hfill
+\end{itemize}
+\begin{center}
+\includegraphics[scale=0.4]{7.png}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\begin{block}{Beispiel}
+	Eine Maschine soll automatisch 60 Gramm Müsli abwiegen und verpacken. Kleine Abweichungen sind dabei möglich, wir nehmen daher an, dass die abgepackte Menge normalverteilt ist. Wir überprüfen eine Stichprobe von 10 Verpackungen mit folgenden Mengen an Müsli (in Gramm):
+	\begin{center}
+		59.75 61.37 59.33 64.19 61.66 59.36 61.97 62.48 62.15 60.39
+	\end{center}   
+	Sind die Abweichungen von der Soll-Menge Zufall? Oder misst die Maschine nicht mehr auf 60 Gramm? Teste zu einem Konfidenzniveau von 95\%.
+\end{block}
+\end{frame}
+
+\begin{frame}
+Ausgangssituation:
+$$ X_1,\dots,X_n\sim \mathcal{N}(\mu,\sigma^2)\text{~iid} $$
+
+Hypothesen:
+$$H_0:\mu=\mu_0,~H_1:\mu\neq\mu_0$$
+
+Teststatistik:
+$$ T=\frac{\bar{X}-\mu_0}{S}\sqrt{n} \sim t_{n-1} $$
+\begin{center}
+\includegraphics[scale=0.2]{5.png}
+\end{center}
+\end{frame}
+
+\begin{frame}
+Ausgangssituation:
+$$ X_1,\dots,X_{10}\sim \mathcal{N}(\mu,\sigma^2)\text{~iid} $$
+
+Hypothesen:
+$$H_0:\mu=60,~H_1:\mu\neq 60$$
+
+Teststatistik:
+$$ T=\frac{\bar{X}-60}{S}\sqrt{10} \sim t_{9} $$
+\begin{center}
+\includegraphics[scale=0.2]{5.png}
+\end{center}
+\end{frame}
+
+\begin{frame}
+$$ T=\frac{\bar{X}-60}{S}\sqrt{10} \sim t_{9} $$
+\begin{center}
+\includegraphics[scale=0.4]{5b.png}
+\end{center}
+\end{frame}
+
+\begin{frame}
+$$ T=\frac{\bar{X}-60}{S}\sqrt{10} \sim t_{9} $$
+\begin{center}
+\includegraphics[scale=0.4]{5c.png}
+\end{center}
+\end{frame}
+
+\begin{frame}
+$$ T=\frac{\bar{X}-60}{S}\sqrt{10} \sim t_{9} $$
+\begin{center}
+\includegraphics[scale=0.4]{5d.png}
+\end{center}
+\end{frame}
+
+\end{document}

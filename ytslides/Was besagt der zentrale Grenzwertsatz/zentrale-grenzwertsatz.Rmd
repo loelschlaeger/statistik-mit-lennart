@@ -1,0 +1,157 @@
+---
+output:
+  beamer_presentation:
+    theme: "Rochester"
+    colortheme: "dove"
+    slide_level: 1
+classoption: 
+- t 
+- "handout"
+- "aspectratio=169"
+header-includes:
+- \usepackage[ngerman]{babel}
+- \usepackage[utf8]{inputenc}
+- \usepackage{mdframed}
+- \newmdtheoremenv{ndef}{Definition}
+- \newmdtheoremenv{nsatz}{Satz}
+- \def\begincols{\begin{columns}}
+- \def\begincol{\begin{column}}
+- \def\endcol{\end{column}}
+- \def\endcols{\end{columns}}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  lang = "r",
+  tidy = TRUE,
+  echo = FALSE,
+  tidy.opts = list(blank = FALSE, width.cutoff = 60),
+  highlight = FALSE,
+  collapse = TRUE,
+  comment = "#>",
+  fig.align = "center",
+  fig.dim = c(6,4), 
+  out.width = "100%"
+)
+set.seed(1)
+```
+
+# Was besagt der Zentrale Grenzwertsatz? 
+
+\begin{nsatz}[Der Zentrale Grenzwertsatz]
+Wenn wir eine gro\ss e Anzahl $N$ an unabh\"angigen Stichprobenwerten aus einer Verteilung mit Erwartungswert $\mu$ und Varianz $\sigma^2$ ziehen, dann ist der Mittelwert der Stichprobe normalverteilt mit Erwartungswert $\mu$ und Varianz $\sigma^2 / N$. \\
+
+\pause
+
+Formal: Sei $t = \frac{1}{N} \sum_{n=1}^N t_n$, wobei $t_n \overset{iid}{\sim} f$ mit $E(t_n) = \mu < \infty$, $Var(t_n) = \sigma^2 < \infty$. \\ \pause
+Dann gilt: $$t \overset{a}{\sim} N(\mu, \sigma^2/N).$$ \pause
+Und auch: $$\frac{t - \mu}{\sqrt{\sigma^2 / N}} = \frac{\sum_{n=1}^N t_n - N\mu}{\sqrt{\sigma^2 N}} \to N(0,1).$$
+\end{nsatz}
+
+# Die Verteilung ist beliebig?
+
+::: columns
+
+:::: column
+
+```{r, echo = TRUE}
+x <- 1:5
+p <- c(0.5,0,0.1,0.2,0.2)
+plot(x, p, type = "h")
+```
+
+::::
+
+\pause
+
+:::: column
+
+```{r, echo = TRUE}
+mu <- sum(x * p)
+cat("Erwartungswert:", mu)
+sigma.sq <- sum((x - mu)^2 * p)
+cat("Varianz:", sigma.sq)
+```
+
+:::: 
+
+:::
+
+# Und wir kommen wieder bei der Normalverteilung an?
+
+::: columns
+
+:::: column
+
+```{r, echo = TRUE, tidy = FALSE, tidy.opts = list(width.cutoff = 20)}
+N <- 1000
+t <- function() 
+  mean(
+    sample(
+      x = x, size = N,  
+      replace = TRUE, prob = p
+    )
+  )
+replicate(3, t())
+```
+
+::::
+
+\pause
+
+:::: column
+
+```{r, echo = TRUE}
+T <- replicate(10000, t())
+hist(T, breaks = 20, freq = FALSE)
+```
+
+:::: 
+
+:::
+
+# Und auch bei der Standardnormalverteilung?
+
+::: columns
+
+:::: column
+
+\begin{nsatz}[Der Zentrale Grenzwertsatz]
+[...] \\ Dann gilt: $t \overset{a}{\sim} N(\mu, \sigma^2/N).$ \\
+Und auch: $\frac{t - \mu}{\sqrt{\sigma^2 / N}} \to N(0,1).$
+\end{nsatz}
+
+\pause
+
+```{r, echo = TRUE, tidy = FALSE}
+T_transf <- (T - mu) / 
+  sqrt(sigma.sq / N)
+```
+
+::::
+
+\pause
+
+:::: column
+
+```{r, echo = TRUE, tidy = FALSE}
+hist(T_transf, breaks = 20, 
+     freq = FALSE)
+```
+
+:::: 
+
+:::
+
+# Und wof\"ur kann man das verwenden?
+
+\pause
+
+[...] unabh\"angige Stichprobe $X_1,\dots,X_N$ [...] Erwartungswert jeder Ziehung betr\"agt $\mu$ und Varianz $\sigma^2$ [...] Wie hoch ist die Wahrscheinlichkeit, dass das Stichprobenmittel h\"ochstens $x$ betr\"agt?
+
+\pause
+
+\begin{align*}
+  P \left( \frac{1}{N} \sum_{i=1}^N X_i \leq x \right) &= P \left( \frac{\frac{1}{N} \sum_{i=1}^N X_i - \mu}{\sqrt{\sigma^2/N}} \leq \frac{x - \mu}{\sqrt{\sigma^2/N}} \right) \\
+  &\approx \Phi \left( \frac{x - \mu}{\sqrt{\sigma^2/N}} \right)
+\end{align*}

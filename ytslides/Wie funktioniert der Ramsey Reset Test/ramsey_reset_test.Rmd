@@ -1,0 +1,169 @@
+---
+output:
+  beamer_presentation:
+    theme: "Rochester"
+    colortheme: "dove"
+    highlight: "default"
+    slide_level: 1
+classoption: 
+- t 
+#- "handout"
+- "aspectratio=169"
+header-includes:
+- \usepackage[ngerman]{babel}
+- \usepackage[utf8]{inputenc}
+- \usepackage{mdframed}
+- \usepackage{xcolor}
+- \usepackage{fontawesome}
+- \newmdtheoremenv{ndef}{Definition}
+- \newmdtheoremenv{nsatz}{Satz}
+- \def\begincols{\begin{columns}}
+- \def\begincol{\begin{column}}
+- \def\endcol{\end{column}}
+- \def\endcols{\end{columns}}
+---
+
+```{r, setup, include = FALSE}
+knitr::opts_chunk$set(
+  fig.width = 6,
+  fig.asp = 9/16,
+  fig.align = "center",
+  out.height = "80%",
+  echo = FALSE, 
+  warning = FALSE, 
+  message = FALSE
+)
+set.seed(1)
+options(scipen = 999, digits = 2)
+```
+
+```{r, data}
+n <- 20
+x <- runif(n, 0, 10)
+y <- -2 + 3 * x - 0.1 * x^2 + rnorm(n) 
+data <- data.frame(x = x, y = y)
+```
+
+# Was soll der Ramsey RESET Test prüfen?
+
+**R**egression **E**quation **S**pecification **E**rror **T**est von James **Ramsey** (1969)
+
+\pause
+
+*Ist die Modellgleichung im Regressionsmodell fehlspezifiziert?*
+
+```{r, example_misspec, out.height = "70%"}
+library("ggplot2")
+library("latex2exp")
+ggplot(data, aes(x, y)) +
+  geom_smooth(
+    method = "lm",
+    formula = y ~ x,
+    se = FALSE,
+    aes(color = "blue")
+  ) +
+  geom_smooth(
+    method = "lm",
+    formula = y ~ x + I(x^2),
+    se = FALSE,
+    aes(color = "red")
+  ) +
+  geom_point() +
+  scale_x_continuous(
+    breaks = scales::pretty_breaks(n = 10),
+    limits = c(0, 10)
+  ) +
+  theme_minimal() +
+  theme(
+    legend.text.align = 0  
+  ) +
+  scale_color_identity(
+    name = "Modellformel",
+    breaks = c("blue", "red"),
+    labels = c(
+      TeX("$y_i = \\beta_0 + \\beta_1 x_i + \\epsilon_i$"), 
+      TeX("$y_i = \\beta_0 + \\beta_1 x_i + \\beta_2 x_i^2 + \\epsilon_i$")
+    ),
+    guide = "legend"
+  )
+```
+
+# Welches Modell ist richtig?
+
+Wir können das quadratische Modell schätzen und mit dem t-Test überprüfen, ob $\beta_2$ signifikant (von Null verschieden) ist:
+
+```{r, t-test-model, echo = TRUE}
+formula <- y ~ x + I(x^2)
+quadratic_model <- lm(formula, data)
+```
+
+\pause
+
+```{r, t-test-output, echo = TRUE}
+summary(quadratic_model)$coefficients
+```
+
+\pause
+
+Hier ist der p-value für $H_0:\beta_2 = 0$ ziemlich klein, also wird $H_0$ verworfen. Wir würden uns also für das quadratische Modell entscheiden.
+
+# Funktioniert dieses Vorgehen auch bei mehreren Regressoren?
+
+Bei $y_i = \beta_0 + \beta_1 x_i + \epsilon_i$ gegen $y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \epsilon_i$ hat das gut funktioniert.
+
+Und wenn wir mehr als nur einen Regressor haben?
+\pause
+\begin{align*}
+  \text{Hauspreis}_i = \beta_0 + \beta_1 \text{Wohnfläche}_i + \beta_2 \text{Schlafzimmeranzahl}_i + \beta_3 \text{Baujahr}_i + \epsilon_i
+\end{align*}
+\pause
+Hier gibt es viel mehr Möglichkeiten:
+
+\begin{itemize}
+  \item Quadratische Terme: $\text{Wohnfläche}_i^2$, $\text{Schlafzimmeranzahl}_i^2$, $\text{Baujahr}_i^2$
+  \item Interaktionsterme: $\text{Wohnfläche}_i \cdot \text{Schlafzimmeranzahl}_i$, $\dots$
+  \item Kubische Terme: $\text{Wohnfläche}_i^3$, $\dots$
+\end{itemize}
+
+Für jede Möglichkeit einen t-Test durchzuführen ist zu aufwendig.
+
+# Was ist nun Ramsey's Idee?
+
+\vspace{-0.5cm}
+\begin{enumerate}[<+->]
+  \item Schätze das Ausgangsmodell:
+  \begin{align*}
+    \text{Hauspreis}_i = \beta_0 + \beta_1 \text{Wohnfläche}_i + \beta_2 \text{Schlafzimmeranzahl}_i + \beta_3 \text{Baujahr}_i + \epsilon_i
+  \end{align*}
+  \item Berechne die Prognosen:
+  \begin{align*}
+    \textcolor{red}{\widehat{\text{Hauspreis}}_i} = \hat{\beta_0} + \hat{\beta_1} \text{Wohnfläche}_i + \hat{\beta_2} \text{Schlafzimmeranzahl}_i + \hat{\beta_3} \text{Baujahr}_i 
+  \end{align*}
+  \item Schätze erneut, aber diesmal \textbf{mit Potenzen der Prognosen als Regressoren}:
+  \begin{align*}
+    \text{Hauspreis}_i &= \beta_0 + \beta_1 \text{Wohnfläche}_i + \beta_2 \text{Schlafzimmeranzahl}_i + \beta_3 \text{Baujahr}_i \\
+    &+ \textcolor{blue}{\beta_4} \textcolor{red}{\widehat{\text{Hauspreis}}_i}^2 + \textcolor{blue}{\beta_5} \textcolor{red}{\widehat{\text{Hauspreis}}_i}^3 + \epsilon_i 
+  \end{align*}
+  \item Teste $H_0:\textcolor{blue}{\beta_4} = \textcolor{blue}{\beta_5} = 0$ mit einem F-Test.
+\end{enumerate}
+
+---
+
+\textbf{Warum nicht auch die erste Potenz der Prognosen?}
+
+Die $\textcolor{red}{\widehat{\text{Hauspreis}}}$ Werte sind bereits eine Linearkombination der Regressoren. Würden sie zusätzlich aufgenommen werden, würde das zu Multikollinearität führen.
+
+\pause
+
+\textbf{Bis zur wievielten Potenz?}
+
+Dafür gibt es keine allgemeine Regel, meistens wählt man die 2. und 3. Potenz.
+
+\pause
+
+\textbf{Vor- und Nachteile des Verfahrens?}
+
+\begin{itemize}
+  \item[\faThumbsOUp] Kann auch bei einer Vielzahl an Regressoren effizient angewendet werden. Wir brauchen kein Alternativmodel definieren.
+  \item[\faThumbsODown] Es kann zwar aufgezeigt werden, \textit{ob} eine Fehlspezifikation vorliegt, aber nicht \textit{welcher Art}.
+\end{itemize}

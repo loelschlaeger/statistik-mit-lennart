@@ -1,0 +1,162 @@
+\documentclass[t,11pt]{beamer}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usetikzlibrary{calc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{framed}
+\usecolortheme{orchid}
+\usepackage{etoolbox}
+\useinnertheme[shadow=true]{rounded}
+
+%%% PROGRESSBAR
+\definecolor{pbblue}{HTML}{D8D8D8}% filling color for the progress bar
+\definecolor{pbgray}{HTML}{F2F2F2}% background color for the progress bar
+\useoutertheme{infolines}
+\setbeamerfont{footline}{size=\normalsize}
+\setbeamersize{text margin left=30pt,text margin right=30pt}
+\makeatletter
+\setbeamertemplate{footline}
+{
+	\leavevmode%
+	\hbox{%
+		\begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.5ex,dp=1ex,center]{title in head/foot}%
+			\usebeamerfont{title in head/foot}\insertshorttitle
+		\end{beamercolorbox}%
+		\begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.5ex,dp=1ex,center]{date in head/foot}%
+			%\usebeamerfont{date in head/foot}\insertshortdate{}\hspace*{2em}
+			%\insertframenumber\hspace*{2ex} 
+		\end{beamercolorbox}
+		\begin{beamercolorbox}[wd=.333333\paperwidth,ht=3ex,dp=1ex,center]{author in head/foot}%
+			\usebeamerfont{author in head/foot}\insertshortauthor~~%\beamer@ifempty{\insertshortinstitute}{}{(\insertshortinstitute)}
+		\end{beamercolorbox}%
+	}%
+	\vskip0pt%
+}
+\makeatother
+\makeatletter
+\def\progressbar@progressbar{} % the progress bar
+\newcount\progressbar@tmpcounta% auxiliary counter
+\newcount\progressbar@tmpcountb% auxiliary counter
+\newdimen\progressbar@pbht %progressbar height
+\newdimen\progressbar@pbwd %progressbar width
+\newdimen\progressbar@tmpdim % auxiliary dimension
+\progressbar@pbwd=\linewidth
+\progressbar@pbht=1.5ex
+\def\progressbar@progressbar{%
+    \progressbar@tmpcounta=\insertframenumber
+    \progressbar@tmpcountb=\inserttotalframenumber
+    \progressbar@tmpdim=\progressbar@pbwd
+    \multiply\progressbar@tmpdim by \progressbar@tmpcounta
+    \divide\progressbar@tmpdim by \progressbar@tmpcountb
+  \begin{tikzpicture}[rounded corners=3pt,very thin]
+    \shade[top color=pbgray!20,bottom color=pbgray!20,middle color=pbgray!50]
+      (0pt, 0pt) rectangle ++ (\progressbar@pbwd, \progressbar@pbht);
+      \shade[draw=pbblue,top color=pbblue!50,bottom color=pbblue!50,middle color=pbblue] %
+        (0pt, 0pt) rectangle ++ (\progressbar@tmpdim, \progressbar@pbht);
+    \draw[color=normal text.fg!50]  
+      (0pt, 0pt) rectangle (\progressbar@pbwd, \progressbar@pbht) 
+        node[pos=0.5,color=normal text.fg] {\textnormal{%
+             \pgfmathparse{\insertframenumber*100/\inserttotalframenumber}%
+             \pgfmathprintnumber[fixed,precision=0]{\pgfmathresult}\,\%%
+        }%
+    };
+  \end{tikzpicture}%
+}
+\addtobeamertemplate{headline}{}
+{%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=4ex,center,dp=1ex]{white}%
+    \progressbar@progressbar%
+  \end{beamercolorbox}%
+}
+\makeatother
+
+
+%%% BLOCKS
+% block = Aufgabe
+\setbeamercolor{block title}{fg=black,bg=blue!30!white} 
+\setbeamercolor{block body}{fg=black, bg=blue!3!white}
+
+% alertblock = Definition
+\setbeamercolor{block title alerted}{fg=black,bg=red!50!white} 
+\setbeamercolor{block body alerted}{fg=black, bg=red!3!white}
+
+% exampleblock = Wiederholung
+\setbeamercolor{block title example}{fg=black,bg=green!30!white} 
+\setbeamercolor{block body example}{fg=black, bg=green!3!white}
+
+
+
+\begin{document}
+	%\author{www.oilbat.de}
+	%\title{Stochastik}
+	\subtitle{}
+	\logo{}
+	\institute{}
+	\date{}
+	\subject{}
+	\setbeamercovered{transparent}
+	\setbeamertemplate{navigation symbols}{}
+
+\addtocounter{framenumber}{-1}
+\setbeamercovered{invisible}
+
+\begin{frame}
+\begin{exampleblock}{Ein Beispiel}
+	Gegeben ist diese Stichprobe: 
+	\begin{align*}
+	2.4,~2.0,~3.0,~2.4,~2.9,~2.4,~2.6,~2.6,~1.6,~2.2
+	\end{align*}
+	Sie stammt aus einer Normalverteilung. Wie groß ist $\mu$?
+	\begin{align*}
+	\hat{\mu}_{ML} = \hat{\mu}_{MM} = \bar{x} = 2.4?
+	\end{align*}
+	Oder lieber: $\mu$ wird in $[2.0,2.8]$ liegen?
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}
+	\begin{block}{Warum Konfidenzintervalle?}
+		\begin{itemize}
+			\item Punktschätzung (ML- oder Momenten-Methode) liefert uns einen Schätzwert $\hat{\theta}$
+			\item der ist in der Regel nicht identisch mit dem wahren Parameter $\theta$
+			\item auch ist unklar, wie nahe $\hat{\theta}$ an $\theta$ dran liegt
+			\item besser: Intervall $[a,b]$, das $\theta$ einfängt
+			\item gesucht ist ein Verfahren, das mit hoher Wahrscheinlichkeit ein Intervall liefert, das $\theta$ enthält
+			\item die sogenannte Vertrauenswahrscheinlichkeit wollen wir festlegen können
+		\end{itemize}
+	\end{block}
+\end{frame}
+
+\begin{frame}
+	\begin{alertblock}{Achtung: Die richtige Formulierung}
+			\textbf{Falsch ist:} 
+			
+			$\mu$ liegt mit 95\% Wahrscheinlichkeit in $[2.0,2.8]$
+			
+			\vspace{0.2cm}
+			\textbf{Richtig ist:} 
+			
+			Mit 95\% Wahrscheinlichkeit hat die beobachtete Stichprobe ein Intervall erzeugt, dass $\mu$ enthält.
+
+	\end{alertblock}
+\end{frame}
+
+\begin{frame}
+	\begin{block}{Definition: $(1-\alpha)$-Konfidenzintervall}
+		Gegeben sei eine Irrtumswahrscheinlichkeit $\alpha$ und eine \textit{iid} Stichprobe $X_1,\dots,X_n$. Dann bilden die Stichprobenfunktionen
+		\begin{itemize}
+			\item $G_u = G_u(X_1,\dots,X_n)$
+			\item und $G_o = G_o(X_1,\dots,X_n)$
+		\end{itemize}
+		durch $[G_u,G_o]$ ein $(1-\alpha)$-Konfidenzintervall für $\theta$, falls
+		\begin{align*}
+			P(G_u\leq \theta \leq G_o) = 1-\alpha.
+		\end{align*}
+	\end{block}
+\end{frame}
+
+
+
+\end{document}

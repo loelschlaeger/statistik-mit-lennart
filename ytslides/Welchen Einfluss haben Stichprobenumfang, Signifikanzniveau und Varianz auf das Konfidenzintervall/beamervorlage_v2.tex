@@ -1,0 +1,103 @@
+\documentclass[t,11pt,aspectratio=169]{beamer}
+\input{header}
+
+\begin{document}
+	
+\begin{frame}[fragile]
+	Stichprobe aus einer Normalverteilung:
+	\begin{verbatim}
+	> x
+	-0.3109498  1.3417310 -0.9245257 -0.1026436  1.0769149 
+	-1.1520844 -0.9227701 -1.7029334 -0.3855018  0.6828499
+	\end{verbatim}
+	\pause
+	Maximum-Likelihood-Schätzwert für $\mu$:
+	\begin{align*}
+		\hat{\mu}_{\text{ML}} = \bar{X} = -0.2399913
+	\end{align*}
+	\pause
+	95\%-Konfidenzintervall für $\mu$:
+	\begin{align*}
+		\left[ -0.9569236;  0.476941 \right]
+	\end{align*}
+\end{frame}
+
+\begin{frame}
+\begin{alertblock}{$(1-\alpha)$ - Konfidenzintervall für den Erwartungswert einer Normalverteilung}
+	$\sigma$ bekannt:
+	\begin{align*}
+	\left[ \bar{X} - z_{1-\alpha/2} \frac{\sigma}{\sqrt{n}};~\bar{X} + z_{1-\alpha/2} \frac{\sigma}{\sqrt{n}}  \right]
+	\end{align*}
+	$\sigma$ unbekannt:
+	\begin{align*}
+	\left[ \bar{X} - t_{1-\alpha/2; n-1} \frac{S}{\sqrt{n}};~\bar{X} + t_{1-\alpha/2; n-1} \frac{S}{\sqrt{n}} \right]
+	\end{align*}
+\end{alertblock}
+\pause Wie verändert sich das Konfidenzintervall, wenn
+\begin{itemize}
+	\item $n$ steigt?
+	\item $\alpha$ sinkt?
+	\item $\sigma$ steigt?
+	\item $\sigma$ durch die Stichprobenstandardabweichung $S$ geschätzt wird?
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\begin{alertblock}{$(1-\alpha)$ - Konfidenzintervall für den Erwartungswert einer Normalverteilung}
+$\sigma$ bekannt:
+\begin{align*}
+\left[ \bar{X} - z_{1-\alpha/2} \frac{\sigma}{\sqrt{n}};~\bar{X} + z_{1-\alpha/2} \frac{\sigma}{\sqrt{n}}  \right]
+\end{align*}
+\end{alertblock}
+Breite $b$ des KI:
+\begin{align*}
+b = \bar{X} + z_{1-\alpha/2} \frac{\sigma}{\sqrt{n}} -  \left(\bar{X} - z_{1-\alpha/2} \frac{\sigma}{\sqrt{n}} \right)= 2z_{1-\alpha/2}\frac{\sigma}{\sqrt{n}}
+\end{align*}
+\pause Und damit gilt:
+\begin{itemize}
+	\item Wenn $n$ steigt, dann wird das KI schmaler.
+	\item Wenn $\alpha$ sinkt wird $z_{1-\alpha/2}$ größer und damit das KI breiter.
+	\item Wenn $\sigma$ steigt wird das KI breiter.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+Folgende konkrete Maßnahmen können wir ableiten, um das KI schmaler zu machen:
+\begin{itemize}
+	\item Erhöhe den Stichprobenumfang. Das führt evtl. zu höheren Kosten.
+	\item Wähle ein größeres $\alpha$. Damit riskieren wir aber, den wahren Parameter nicht einzufangen.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+Will man zu fester Irrtumswahrscheinlichkeit $\alpha$ ein Konfidenzintervall mit bestimmter Maximalbreite haben, kann man den notwendigen Stichprobenumfang berechnen:
+\begin{align*}
+&b = 2z_{1-\alpha/2}\frac{\sigma}{\sqrt{n}} \\
+\Leftrightarrow ~~ & n = \left(\frac{2z_{1-\alpha/2}\sigma}{b} \right )^2
+\end{align*}
+\end{frame}
+
+\begin{frame}
+Was ist mit dem letzten Fall: $\sigma$ wird durch die Stichprobenstandardabweichung $S$ geschätzt?
+\begin{align*}
+	S = \sqrt{\frac{1}{n-1}\sum_{i=1}^{n}(X_i-\bar{X})}
+\end{align*}
+\pause
+\begin{center}
+\begin{tabular}{cccc}
+$\alpha$ & $z_{1-\alpha/2}$ & $t_{1-\alpha/2; 10}$ & $t_{1-\alpha/2; 30}$\\
+\hline
+0,01 & 2,58 & 3,17 & 2,75\\
+0,05 & 1,96 & 2,23 & 2,04 \\
+0,10 & 1,64 & 1,81 & 1,70
+\end{tabular}
+\end{center}
+\pause
+Und damit gilt:
+\begin{itemize}
+	\item Wenn $\sigma$ durch $S$ geschätzt wird, wird das KI breiter.
+	\item Wenn $n>30$, ist $z_{1-\alpha/2}\approx t_{1-\alpha/2; n-1}$ und der Effekt ist vernachlässigbar.
+\end{itemize}
+\end{frame}
+
+\end{document}

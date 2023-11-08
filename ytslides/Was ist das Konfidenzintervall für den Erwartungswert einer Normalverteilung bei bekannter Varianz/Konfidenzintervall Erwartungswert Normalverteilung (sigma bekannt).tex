@@ -1,0 +1,206 @@
+\documentclass[t,11pt]{beamer}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usetikzlibrary{calc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{framed}
+\usecolortheme{orchid}
+\usepackage{etoolbox}
+\useinnertheme[shadow=true]{rounded}
+
+%%% PROGRESSBAR
+\definecolor{pbblue}{HTML}{D8D8D8}% filling color for the progress bar
+\definecolor{pbgray}{HTML}{F2F2F2}% background color for the progress bar
+\useoutertheme{infolines}
+\setbeamerfont{footline}{size=\normalsize}
+\setbeamersize{text margin left=30pt,text margin right=30pt}
+\makeatletter
+\setbeamertemplate{footline}
+{
+	\leavevmode%
+	\hbox{%
+		\begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.5ex,dp=1ex,center]{title in head/foot}%
+			\usebeamerfont{title in head/foot}\insertshorttitle
+		\end{beamercolorbox}%
+		\begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.5ex,dp=1ex,center]{date in head/foot}%
+			%\usebeamerfont{date in head/foot}\insertshortdate{}\hspace*{2em}
+			%\insertframenumber\hspace*{2ex} 
+		\end{beamercolorbox}
+		\begin{beamercolorbox}[wd=.333333\paperwidth,ht=3ex,dp=1ex,center]{author in head/foot}%
+			\usebeamerfont{author in head/foot}\insertshortauthor~~%\beamer@ifempty{\insertshortinstitute}{}{(\insertshortinstitute)}
+		\end{beamercolorbox}%
+	}%
+	\vskip0pt%
+}
+\makeatother
+\makeatletter
+\def\progressbar@progressbar{} % the progress bar
+\newcount\progressbar@tmpcounta% auxiliary counter
+\newcount\progressbar@tmpcountb% auxiliary counter
+\newdimen\progressbar@pbht %progressbar height
+\newdimen\progressbar@pbwd %progressbar width
+\newdimen\progressbar@tmpdim % auxiliary dimension
+\progressbar@pbwd=\linewidth
+\progressbar@pbht=1.5ex
+\def\progressbar@progressbar{%
+    \progressbar@tmpcounta=\insertframenumber
+    \progressbar@tmpcountb=\inserttotalframenumber
+    \progressbar@tmpdim=\progressbar@pbwd
+    \multiply\progressbar@tmpdim by \progressbar@tmpcounta
+    \divide\progressbar@tmpdim by \progressbar@tmpcountb
+  \begin{tikzpicture}[rounded corners=3pt,very thin]
+    \shade[top color=pbgray!20,bottom color=pbgray!20,middle color=pbgray!50]
+      (0pt, 0pt) rectangle ++ (\progressbar@pbwd, \progressbar@pbht);
+      \shade[draw=pbblue,top color=pbblue!50,bottom color=pbblue!50,middle color=pbblue] %
+        (0pt, 0pt) rectangle ++ (\progressbar@tmpdim, \progressbar@pbht);
+    \draw[color=normal text.fg!50]  
+      (0pt, 0pt) rectangle (\progressbar@pbwd, \progressbar@pbht) 
+        node[pos=0.5,color=normal text.fg] {\textnormal{%
+             \pgfmathparse{\insertframenumber*100/\inserttotalframenumber}%
+             \pgfmathprintnumber[fixed,precision=0]{\pgfmathresult}\,\%%
+        }%
+    };
+  \end{tikzpicture}%
+}
+\addtobeamertemplate{headline}{}
+{%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=4ex,center,dp=1ex]{white}%
+    \progressbar@progressbar%
+  \end{beamercolorbox}%
+}
+\makeatother
+
+
+%%% BLOCKS
+% block = Aufgabe
+\setbeamercolor{block title}{fg=black,bg=blue!30!white} 
+\setbeamercolor{block body}{fg=black, bg=blue!3!white}
+
+% alertblock = Definition
+\setbeamercolor{block title alerted}{fg=black,bg=red!50!white} 
+\setbeamercolor{block body alerted}{fg=black, bg=red!3!white}
+
+% exampleblock = Wiederholung
+\setbeamercolor{block title example}{fg=black,bg=green!30!white} 
+\setbeamercolor{block body example}{fg=black, bg=green!3!white}
+
+
+
+\begin{document}
+	%\author{www.oilbat.de}
+	%\title{Stochastik}
+	\subtitle{}
+	\logo{}
+	\institute{}
+	\date{}
+	\subject{}
+	\setbeamercovered{transparent}
+	\setbeamertemplate{navigation symbols}{}
+
+\addtocounter{framenumber}{-1}
+\setbeamercovered{invisible}
+
+\begin{frame}
+\begin{block}{Aufgabe}
+	Wir wollen annehmen, dass sich die Akkuladedauer für Handys gut durch eine Normalverteilung mit einer Standardabweichung von 20 beschreiben lässt. Aus $\mathcal{N}(\mu, \sigma^2 = 20^2)$ wurde eine Stichprobe mit den Realisationen $(x_1,\dots,x_{100})$ gezogen, wobei $\bar{x} = 121,06$ Minuten. Ermitteln Sie die Grenzen eines 95\%-KIs für $\mu$.
+\end{block}
+\end{frame}
+
+\begin{frame}
+\begin{block}{Aufgabe}
+	Wir wollen annehmen, dass sich die Akkuladedauer für Handys gut durch eine Normalverteilung mit einer Standardabweichung von 20 beschreiben lässt. Aus $\mathcal{N}(\mu, \sigma^2 = 20^2)$ wurde eine Stichprobe mit den Realisationen $(x_1,\dots,x_{100})$ gezogen, wobei $\bar{x} = 121,06$ Minuten. Ermitteln Sie die Grenzen eines 95\%-KIs für $\mu$.
+\end{block}
+\begin{alertblock}{Definition: $1-\alpha$-KI für $\mu$ falls $\sigma$ bekannt ist}
+	\begin{align*}
+	\left[ \bar{X} - z_{1-\alpha/2} \frac{\sigma}{\sqrt{n}};~\bar{X} + z_{1-\alpha/2} \frac{\sigma}{\sqrt{n}}  \right]
+	\end{align*}
+	\vspace{-0.5cm}
+	\begin{itemize}
+		\item $\alpha$ ist das Konfidenzniveau
+		\item $z_{1-\alpha/2}$ ist das $1-\alpha/2$-Quantil der Standardnormalverteilung
+		\item $\sigma$ ist die \textbf{bekannte} Standardabweichung
+		\item $n$ ist der Stichprobenumfang
+	\end{itemize}
+\end{alertblock}
+\end{frame}
+
+\begin{frame}
+	\begin{align*}
+		\frac{\bar{X}-\mu}{\sigma/\sqrt{n}}\sim \mathcal{N}(0,1)
+	\end{align*}
+\end{frame}
+
+\begin{frame}
+\begin{align*}
+\frac{\bar{X}-\mu}{\sigma/\sqrt{n}}\sim \mathcal{N}(0,1)
+\end{align*}
+\begin{align*}
+1-\alpha &= P(-z_{1-\alpha/2}\leq \frac{\bar{X}-\mu}{\sigma/\sqrt{n}} \leq z_{1-\alpha/2}) \\
+&= P(-z_{1-\alpha/2} \frac{\sigma}{\sqrt{n}}\leq \bar{X}-\mu \leq z_{1-\alpha/2} \frac{\sigma}{\sqrt{n}}) \\
+&= P(\bar{X} -z_{1-\alpha/2} \frac{\sigma}{\sqrt{n}}\leq \mu \leq \bar{X} + z_{1-\alpha/2} \frac{\sigma}{\sqrt{n}})
+\end{align*}
+\end{frame}
+
+\begin{frame}
+\begin{align*}
+\frac{\bar{X}-\mu}{\sigma/\sqrt{n}}\sim \mathcal{N}(0,1)
+\end{align*}
+\begin{align*}
+1-\alpha &= P(-z_{1-\alpha/2}\leq \frac{\bar{X}-\mu}{\sigma/\sqrt{n}} \leq z_{1-\alpha/2}) \\
+&= P(-z_{1-\alpha/2} \frac{\sigma}{\sqrt{n}}\leq \bar{X}-\mu \leq z_{1-\alpha/2} \frac{\sigma}{\sqrt{n}}) \\
+&= P(\bar{X} -z_{1-\alpha/2} \frac{\sigma}{\sqrt{n}}\leq \mu \leq \bar{X} + z_{1-\alpha/2} \frac{\sigma}{\sqrt{n}})
+\end{align*}
+\begin{align*}
+\left[ \bar{X} - z_{1-\alpha/2} \frac{\sigma}{\sqrt{n}};~\bar{X} + z_{1-\alpha/2} \frac{\sigma}{\sqrt{n}}  \right]
+\end{align*}
+\end{frame}
+
+\begin{frame}
+	\begin{block}{Aufgabe}
+		Wir wollen annehmen, dass sich die Akkuladedauer für Handys gut durch eine Normalverteilung mit einer Standardabweichung von 20 beschreiben lässt. Aus $\mathcal{N}(\mu, \sigma^2 = 20^2)$ wurde eine Stichprobe mit den Realisationen $(x_1,\dots,x_{100})$ gezogen, wobei $\bar{x} = 121,06$ Minuten. Ermitteln Sie die Grenzen eines 95\%-KIs für $\mu$.
+	\end{block}
+	\begin{itemize}
+		\item Arithmetisches Stichprobenmittel: $\bar{x} = 121,06$
+		\item Konfidenzniveau: $\alpha=5\%$
+		\item Damit ist das Quantil $z_{1-\alpha/2}=z_{0,975}=1,96$
+		\item Die \textbf{bekannte} Standardabweichung ist $\sigma=20$
+		\item Der Stichprobenumfang ist $n=100$
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+\begin{itemize}
+	\item Arithmetisches Stichprobenmittel: $\bar{x} = 121,06$
+	\item Konfidenzniveau: $\alpha=5\%$
+	\item Damit ist das Quantil $z_{1-\alpha/2}=z_{0,975}=1,96$
+	\item Die \textbf{bekannte} Standardabweichung ist $\sigma=20$
+	\item Der Stichprobenumfang ist $n=100$
+\end{itemize}
+\begin{alertblock}{Definition: $1-\alpha$-KI für $\mu$ falls $\sigma$ bekannt ist}
+	\begin{align*}
+	\left[ \bar{X} - z_{1-\alpha/2} \frac{\sigma}{\sqrt{n}};~\bar{X} + z_{1-\alpha/2} \frac{\sigma}{\sqrt{n}}  \right]
+	\end{align*}
+\end{alertblock}
+\end{frame}
+
+\begin{frame}
+\begin{itemize}
+	\item Arithmetisches Stichprobenmittel: $\bar{x} = 121,06$
+	\item Konfidenzniveau: $\alpha=5\%$
+	\item Damit ist das Quantil $z_{1-\alpha/2}=z_{0,975}=1,96$
+	\item Die \textbf{bekannte} Standardabweichung ist $\sigma=20$
+	\item Der Stichprobenumfang ist $n=100$
+\end{itemize}
+\begin{alertblock}{Definition: $1-\alpha$-KI für $\mu$ falls $\sigma$ bekannt ist}
+	\begin{align*}
+	\left[ \bar{X} - z_{1-\alpha/2} \frac{\sigma}{\sqrt{n}};~\bar{X} + z_{1-\alpha/2} \frac{\sigma}{\sqrt{n}}  \right]
+	\end{align*}
+\end{alertblock}
+\begin{align*}
+\left[ 121,06 - 1,96\cdot \frac{20}{\sqrt{100}};~ 121,06 + 1,96\cdot \frac{20}{\sqrt{100}} \right] = \left[ 117,14;~124,98 \right]
+\end{align*}
+\end{frame}
+
+\end{document}

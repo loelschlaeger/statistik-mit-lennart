@@ -1,0 +1,88 @@
+\documentclass[t,11pt,aspectratio=169]{beamer}
+\input{header}
+
+\begin{document}
+
+\begin{frame}
+\begin{block}{Aufgabe:}
+Gegeben ist eine Stichprobe $X_1,\dots,X_n$ aus einer normalverteilten Grundgesamtheit. Prüfe, ob die folgenden Schätzer für den Parameter $\mu$ erwartungstreu und konsistent sind:
+\begin{itemize}
+	\item $T_1 = \bar{X}$
+	\item $T_2 = \frac{1}{2}(X_1+X_n)$
+\end{itemize}
+\end{block}
+\pause
+\begin{exampleblock}{Wiederholung: Normalverteilung}
+Falls $X\sim\mathcal{N}(\mu,\sigma^2)$, dann ist
+\begin{align*}
+E(X)=\mu,~Var(X)=\sigma^2.
+\end{align*}
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}
+\begin{alertblock}{Definition: Erwartungstreuer Schätzer}
+Ein Schätzfunktion $T$ für den Parameter $\theta$ ist erwartungstreu, falls
+\begin{align*}
+E(T)=\theta.
+\end{align*}
+\end{alertblock}
+\pause
+\begin{alertblock}{Definition: Konsistenter Schätzer}
+Ein Schätzfunktion $T$ ist konsistent, falls sie erwartungstreu ist und zusätzlich
+\begin{align*}
+Var(T)\to 0,
+\end{align*}
+wenn der Stichprobenumfang $n\to\infty$.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}
+Wir schauen uns zunächst $T_1 = \bar{X}$ an, $X_1,\dots,X_n\sim \mathcal{N}(\mu,\sigma^2)$.
+\begin{align*}
+E(T_1) &= E(\bar{X}) 
+= E\left(\frac{1}{n}\sum_{i=1}^{n}X_i \right) 
+= \frac{1}{n}\sum_{i=1}^{n}E(X_i) \\
+&=  \frac{1}{n}\sum_{i=1}^{n} \mu 
+= \frac{1}{n}n\mu 
+= \mu
+\end{align*}
+\pause
+\begin{align*}
+Var(T_1) &= Var(\bar{X}) 
+= Var\left(\frac{1}{n}\sum_{i=1}^{n}X_i \right) 
+= \frac{1}{n^2}\sum_{i=1}^{n}Var(X_i) \\
+&=  \frac{1}{n^2}\sum_{i=1}^{n} \sigma^2 
+= \frac{1}{n^2}n\sigma^2 
+= \frac{\sigma^2}{n} \to 0
+\end{align*}
+Also ist $T_1$ erwartungstreu und konsistent.
+\end{frame}
+
+\begin{frame}
+Nun schauen wir uns $T_2 = \frac{1}{2}(X_1+X_n)$ an, $X_1,X_n\sim \mathcal{N}(\mu,\sigma^2)$.
+\begin{align*}
+E(T_2) &= E\left(\frac{1}{2}(X_1+X_n)\right)  
+= \frac{1}{2}(E(X_1)+E(X_n)) \\
+&=  \frac{1}{2} (\mu + \mu) 
+= \mu
+\end{align*}
+\pause
+\begin{align*}
+Var(T_2) &= Var\left(\frac{1}{2}(X_1+X_n)\right) 
+= \left(\frac{1}{2}\right)^2 (Var(X_1)+Var(X_n))\\
+&=  \frac{1}{4}(\sigma^2+\sigma^2)
+= \frac{\sigma^2}{2}  
+\end{align*}
+Also ist $T_2$ erwartungstreu aber nicht konsistent.
+\end{frame}
+
+\begin{alertblock}{Definition: Verzerrung, Bias, systematischer Fehler}
+	Gegeben eine Schätzfunktion $T$ und ein zu schätzender Parameter $\theta$. Dann heißt der Wert
+	\begin{align*}
+	E(T)-\theta
+	\end{align*}
+	die Verzerrung, der Bias oder der systematische Fehler von $T$ bei $\theta$.
+\end{alertblock}
+
+\end{document}

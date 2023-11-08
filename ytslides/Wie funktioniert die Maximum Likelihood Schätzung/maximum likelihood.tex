@@ -1,0 +1,356 @@
+\documentclass[t,11pt]{beamer}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usetikzlibrary{calc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{framed}
+\usecolortheme{orchid}
+\usepackage{etoolbox}
+\useinnertheme[shadow=true]{rounded}
+
+
+
+%%% PROGRESSBAR
+\definecolor{pbblue}{HTML}{D8D8D8}% filling color for the progress bar
+\definecolor{pbgray}{HTML}{F2F2F2}% background color for the progress bar
+\useoutertheme{infolines}
+\setbeamerfont{footline}{size=\normalsize}
+\setbeamersize{text margin left=30pt,text margin right=30pt}
+\makeatletter
+\setbeamertemplate{footline}
+{
+	\leavevmode%
+	\hbox{%
+		\begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.5ex,dp=1ex,center]{title in head/foot}%
+			\usebeamerfont{title in head/foot}\insertshorttitle
+		\end{beamercolorbox}%
+		\begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.5ex,dp=1ex,center]{date in head/foot}%
+			%\usebeamerfont{date in head/foot}\insertshortdate{}\hspace*{2em}
+			%\insertframenumber\hspace*{2ex} 
+		\end{beamercolorbox}
+		\begin{beamercolorbox}[wd=.333333\paperwidth,ht=3ex,dp=1ex,center]{author in head/foot}%
+			\usebeamerfont{author in head/foot}\insertshortauthor~~%\beamer@ifempty{\insertshortinstitute}{}{(\insertshortinstitute)}
+		\end{beamercolorbox}%
+	}%
+	\vskip0pt%
+}
+\makeatother
+\makeatletter
+\def\progressbar@progressbar{} % the progress bar
+\newcount\progressbar@tmpcounta% auxiliary counter
+\newcount\progressbar@tmpcountb% auxiliary counter
+\newdimen\progressbar@pbht %progressbar height
+\newdimen\progressbar@pbwd %progressbar width
+\newdimen\progressbar@tmpdim % auxiliary dimension
+\progressbar@pbwd=\linewidth
+\progressbar@pbht=1.5ex
+\def\progressbar@progressbar{%
+    \progressbar@tmpcounta=\insertframenumber
+    \progressbar@tmpcountb=\inserttotalframenumber
+    \progressbar@tmpdim=\progressbar@pbwd
+    \multiply\progressbar@tmpdim by \progressbar@tmpcounta
+    \divide\progressbar@tmpdim by \progressbar@tmpcountb
+  \begin{tikzpicture}[rounded corners=3pt,very thin]
+    \shade[top color=pbgray!20,bottom color=pbgray!20,middle color=pbgray!50]
+      (0pt, 0pt) rectangle ++ (\progressbar@pbwd, \progressbar@pbht);
+      \shade[draw=pbblue,top color=pbblue!50,bottom color=pbblue!50,middle color=pbblue] %
+        (0pt, 0pt) rectangle ++ (\progressbar@tmpdim, \progressbar@pbht);
+    \draw[color=normal text.fg!50]  
+      (0pt, 0pt) rectangle (\progressbar@pbwd, \progressbar@pbht) 
+        node[pos=0.5,color=normal text.fg] {\textnormal{%
+             \pgfmathparse{\insertframenumber*100/\inserttotalframenumber}%
+             \pgfmathprintnumber[fixed,precision=0]{\pgfmathresult}\,\%%
+        }%
+    };
+  \end{tikzpicture}%
+}
+\addtobeamertemplate{headline}{}
+{%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=4ex,center,dp=1ex]{white}%
+    \progressbar@progressbar%
+  \end{beamercolorbox}%
+}
+\makeatother
+
+
+%%% BLOCKS
+% block = Aufgabe
+\setbeamercolor{block title}{fg=black,bg=blue!30!white} 
+\setbeamercolor{block body}{fg=black, bg=blue!3!white}
+
+% alertblock = Definition
+\setbeamercolor{block title alerted}{fg=black,bg=red!50!white} 
+\setbeamercolor{block body alerted}{fg=black, bg=red!3!white}
+
+% exampleblock = Wiederholung
+\setbeamercolor{block title example}{fg=black,bg=green!30!white} 
+\setbeamercolor{block body example}{fg=black, bg=green!3!white}
+
+
+
+
+
+
+\begin{document}
+	\author{www.oilbat.de}
+	%\title{Stochastik}
+	\subtitle{}
+	\logo{}
+	\institute{}
+	\date{}
+	\subject{}
+	\setbeamercovered{transparent}
+	\setbeamertemplate{navigation symbols}{}
+
+\addtocounter{framenumber}{-1}
+\setbeamercovered{invisible}
+
+\begin{frame}
+	\begin{block}{Aufgabe}
+		Bestimme den Maximum-Likelihood-Schätzer für den Erfolgsparameter der Geometrischen Verteilung.
+	\end{block}
+\end{frame}
+
+\begin{frame}
+\begin{block}{Aufgabe}
+	Bestimme den Maximum-Likelihood-Schätzer für den Erfolgsparameter der Geometrischen Verteilung.
+\end{block}
+\begin{alertblock}{Definition: Geometrische Verteilung}
+	Eine Zufallsvariable $X$ ist gemäß der Geometrischen Verteilung zu dem Erfolgsparameter $p\in (0,1)$ verteilt, falls
+	\begin{equation*}
+	f(x)=P(X=x)=(1-p)^xp, \ \ \ x=0,1,2,\dots
+	\end{equation*}
+\end{alertblock}
+\end{frame}
+
+\begin{frame}
+\begin{block}{Aufgabe}
+	Bestimme den Maximum-Likelihood-Schätzer für den Erfolgsparameter der Geometrischen Verteilung.
+\end{block}
+\begin{alertblock}{Definition: Geometrische Verteilung}
+	Eine Zufallsvariable $X$ ist gemäß der Geometrischen Verteilung zu dem Erfolgsparameter $p\in (0,1)$ verteilt, falls
+	\begin{equation*}
+	f(x)=P(X=x)=(1-p)^xp, \ \ \ x=0,1,2,\dots
+	\end{equation*}
+\end{alertblock}
+\vfill
+Stichprobe:
+\begin{align*}
+	2 ~~ 5 ~~ 16 ~~ 6 ~~ 10 ~~ 5 ~~ 2 ~~ 3 ~~ 5 ~~ 0 ~~ 10 ~~ 3 ~~ 3 ~~ 1 ~~ 1 ~~ 6 ~~ 15 ~~ 6 ~~ 18 ~~ 3
+\end{align*}
+\end{frame}
+
+\begin{frame}
+	\begin{exampleblock}{Wiederholung: Allgemeines Verfahren}
+		\begin{enumerate}
+			\item Aufstellen der ML-Funktion $$L(\theta)=\prod_{i=1}^{n}f_{X_i}(\theta)$$
+			\item Logarithmierung $$\log L(\theta)=\sum_{i=1}^{n}\log f_{X_i}(\theta)$$
+			\item Bestimmung der Ableitung $\frac{d}{d\theta}\log L(\theta)$
+			\item Ableitung gleich Null setzen und nach dem gesuchten Parameter auflösen
+		\end{enumerate}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}
+\begin{tikzpicture}
+\begin{axis}[
+domain=0:10,
+xmin=0, xmax=10,
+ymin=0, ymax=5,
+samples=100,
+axis y line=center,
+axis x line=middle,
+]
+\addplot+[mark=none,color=green] {ln(x)};
+\addlegendentry{$\log(x)$}
+\end{axis}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}
+	\begin{tikzpicture}
+	\begin{axis}[
+		domain=0:10,
+		xmin=0, xmax=10,
+		ymin=0, ymax=5,
+		samples=100,
+		axis y line=center,
+		axis x line=middle,
+		]
+		\addplot+[mark=none] {-(x-4)^2+5};
+		\addlegendentry{$f(x)$}
+	\end{axis}
+	\end{tikzpicture}
+\end{frame}
+
+\begin{frame}
+\begin{tikzpicture}
+\begin{axis}[
+domain=0:10,
+xmin=0, xmax=10,
+ymin=0, ymax=5,
+samples=100,
+axis y line=center,
+axis x line=middle,
+]
+\addplot+[mark=none] {-(x-4)^2+5};
+\addplot+[mark=none] {ln(-(x-4)^2+5)};
+\addlegendentry{$f(x)$}
+\addlegendentry{$\log f(x)$}
+\end{axis}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}
+	\begin{exampleblock}{Wiederholung: Allgemeines Verfahren}
+		\begin{enumerate}
+			\item Aufstellen der ML-Funktion $$L(\theta)=\prod_{i=1}^{n}f_{X_i}(\theta)$$
+		\end{enumerate}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}
+\begin{exampleblock}{Wiederholung: Allgemeines Verfahren}
+	\begin{enumerate}
+		\item Aufstellen der ML-Funktion $$L(\theta)=\prod_{i=1}^{n}f_{X_i}(\theta)$$
+	\end{enumerate}
+\end{exampleblock}
+\begin{alertblock}{Definition: Geometrische Verteilung}
+	Eine Zufallsvariable $X$ ist gemäß der Geometrischen Verteilung zu dem Erfolgsparameter $p\in (0,1)$ verteilt, falls
+	\begin{equation*}
+	f(x)=P(X=x)=(1-p)^xp, \ \ \ x=0,1,2,\dots
+	\end{equation*}
+\end{alertblock}
+\end{frame}
+
+\begin{frame}
+\begin{exampleblock}{Wiederholung: Allgemeines Verfahren}
+	\begin{enumerate}
+		\item Aufstellen der ML-Funktion $$L(\theta)=\prod_{i=1}^{n}f_{X_i}(\theta)$$
+	\end{enumerate}
+\end{exampleblock}
+\begin{alertblock}{Definition: Geometrische Verteilung}
+	Eine Zufallsvariable $X$ ist gemäß der Geometrischen Verteilung zu dem Erfolgsparameter $p\in (0,1)$ verteilt, falls
+	\begin{equation*}
+	f(x)=P(X=x)=(1-p)^xp, \ \ \ x=0,1,2,\dots
+	\end{equation*}
+\end{alertblock}
+$$L(p)=\prod_{i=1}^{n}f_{X_i}(p)=\prod_{i=1}^{n}(1-p)^{X_i}p$$
+\end{frame}
+
+\begin{frame}
+	$$L(p)=\prod_{i=1}^{n}f_{X_i}(p)=\prod_{i=1}^{n}(1-p)^{X_i}p$$
+	\begin{exampleblock}{Wiederholung: Allgemeines Verfahren}
+		\begin{enumerate}
+			\item Aufstellen der ML-Funktion $\checkmark$
+			\item Logarithmierung: $\log L(\theta)=\sum_{i=1}^{n}\log f_{X_i}(\theta)$
+		\end{enumerate}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}
+$$L(p)=\prod_{i=1}^{n}f_{X_i}(p)=\prod_{i=1}^{n}(1-p)^{X_i}p$$
+\begin{exampleblock}{Wiederholung: Allgemeines Verfahren}
+	\begin{enumerate}
+		\item Aufstellen der ML-Funktion $\checkmark$
+		\item Logarithmierung: $\log L(\theta)=\sum_{i=1}^{n}\log f_{X_i}(\theta)$
+	\end{enumerate}
+\end{exampleblock}
+\begin{align*}
+\log L(p) &= \sum_{i=1}^{n}\log f_{X_i}(p) = \sum_{i=1}^{n}\log \left[ (1-p)^{X_i}p \right] \\
+&= \sum_{i=1}^{n} \left[ \log (1-p)^{X_i} + \log p \right] = \sum_{i=1}^{n} X_i \cdot  \log (1-p) + \sum_{i=1}^{n} \log p \\
+&= \log (1-p) \sum_{i=1}^{n} X_i + n\cdot \log p
+\end{align*}
+\end{frame}
+
+\begin{frame}
+	$$\log L(p) = \log (1-p) \sum_{i=1}^{n} X_i + n\cdot \log p$$
+	\begin{exampleblock}{Wiederholung: Allgemeines Verfahren}
+		\begin{enumerate}
+			\item Aufstellen der ML-Funktion $\checkmark$ 
+			\item Logarithmierung $\checkmark$
+			\item Bestimmung der Ableitung $\frac{d}{d\theta}\log L(\theta)$
+		\end{enumerate}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}
+$$\log L(p) = \log (1-p) \sum_{i=1}^{n} X_i + n\cdot \log p$$
+\begin{exampleblock}{Wiederholung: Allgemeines Verfahren}
+	\begin{enumerate}
+		\item Aufstellen der ML-Funktion $\checkmark$ 
+		\item Logarithmierung $\checkmark$
+		\item Bestimmung der Ableitung $\frac{d}{d\theta}\log L(\theta)$
+	\end{enumerate}
+\end{exampleblock}
+\begin{align*}
+\frac{d}{d\theta}\log L(p) &=  (-1) \cdot \frac{1}{1-p} \sum_{i=1}^{n} X_i + n\cdot \frac{1}{p} \\
+&= -\frac{1}{1-p}\sum_{i=1}^{n} X_i +  \frac{n}{p}
+\end{align*}
+\end{frame}
+
+\begin{frame}
+	$$  \frac{d}{d\theta}\log L(p) = -\frac{1}{1-p}\sum_{i=1}^{n} X_i +  \frac{n}{p}$$
+	\begin{exampleblock}{Wiederholung: Allgemeines Verfahren}
+		\begin{enumerate}
+			\item Aufstellen der ML-Funktion $\checkmark$
+			\item Logarithmierung $\checkmark$
+			\item Bestimmung der Ableitung $\checkmark$
+			\item Ableitung gleich Null setzen und nach dem gesuchten Parameter auflösen
+		\end{enumerate}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}
+$$  \frac{d}{d\theta}\log L(p) = -\frac{1}{1-p}\sum_{i=1}^{n} X_i +  \frac{n}{p}$$
+\begin{exampleblock}{Wiederholung: Allgemeines Verfahren}
+	\begin{enumerate}
+		\item Aufstellen der ML-Funktion $\checkmark$
+		\item Logarithmierung $\checkmark$
+		\item Bestimmung der Ableitung $\checkmark$
+		\item Ableitung gleich Null setzen und nach dem gesuchten Parameter auflösen
+	\end{enumerate}
+\end{exampleblock}
+$$   -\frac{1}{1-p}\sum_{i=1}^{n} X_i +  \frac{n}{p} \overset{!}{=} 0$$
+\end{frame}
+
+\begin{frame}
+	\begin{align*}
+		&-\frac{1}{1-p}\sum_{i=1}^{n} X_i +  \frac{n}{p} \overset{!}{=} 0 \\
+		\Longleftrightarrow&  -\frac{n\bar{X}}{1-p} +  \frac{n}{p} = 0 \\
+		\Longleftrightarrow& n\left(-\frac{\bar{X}}{1-p} +  \frac{1}{p} \right) = 0 \\
+		\Longleftrightarrow& \frac{-\bar{X}p+(1-p)}{(1-p)p} = 0 \\
+		\Longleftrightarrow& -\bar{X}p+(1-p) = 0 \\
+		\Longleftrightarrow& 1 = \bar{X}p+p \\
+		\Longleftrightarrow& 1 = p\left(\bar{X}+1\right) \\
+		\Longleftrightarrow& p = \frac{1}{\bar{X}+1} \\
+	\end{align*}
+\end{frame}
+
+\begin{frame}
+	\begin{block}{Aufgabe}
+		Bestimme den Maximum-Likelihood-Schätzer für den Erfolgsparameter der Geometrischen Verteilung.
+	\end{block}
+	$$\hat{p}_{ML}=\frac{1}{\bar{X}+1}$$
+\end{frame}
+
+\begin{frame}
+\begin{block}{Aufgabe}
+	Bestimme den Maximum-Likelihood-Schätzer für den Erfolgsparameter der Geometrischen Verteilung.
+\end{block}
+$$\hat{p}_{ML}=\frac{1}{\bar{X}+1}$$
+\vfill
+Stichprobe:
+\begin{align*}
+2 ~~ 5 ~~ 16 ~~ 6 ~~ 10 ~~ 5 ~~ 2 ~~ 3 ~~ 5 ~~ 0 ~~ 10 ~~ 3 ~~ 3 ~~ 1 ~~ 1 ~~ 6 ~~ 15 ~~ 6 ~~ 18 ~~ 3
+\end{align*}
+\vfill
+Maximum-Likelihood-Schätzer:
+\begin{align*}
+\hat{p}_{ML} = \frac{1}{\bar{X}+1} = \frac{1}{6+1} =  \frac{1}{7}
+\end{align*}
+\end{frame}
+
+\end{document}

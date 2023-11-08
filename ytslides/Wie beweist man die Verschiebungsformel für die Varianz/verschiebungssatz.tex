@@ -1,0 +1,233 @@
+\documentclass[t,11pt]{beamer}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usetikzlibrary{calc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{framed}
+\usecolortheme{orchid}
+\usepackage{etoolbox}
+\useinnertheme[shadow=true]{rounded}
+
+%%% PROGRESSBAR
+\definecolor{pbblue}{HTML}{D8D8D8}% filling color for the progress bar
+\definecolor{pbgray}{HTML}{F2F2F2}% background color for the progress bar
+\useoutertheme{infolines}
+\setbeamerfont{footline}{size=\normalsize}
+\setbeamersize{text margin left=30pt,text margin right=30pt}
+\makeatletter
+\setbeamertemplate{footline}
+{
+	\leavevmode%
+	\hbox{%
+		\begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.5ex,dp=1ex,center]{title in head/foot}%
+			\usebeamerfont{title in head/foot}\insertshorttitle
+		\end{beamercolorbox}%
+		\begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.5ex,dp=1ex,center]{date in head/foot}%
+			%\usebeamerfont{date in head/foot}\insertshortdate{}\hspace*{2em}
+			%\insertframenumber\hspace*{2ex} 
+		\end{beamercolorbox}
+		\begin{beamercolorbox}[wd=.333333\paperwidth,ht=3ex,dp=1ex,center]{author in head/foot}%
+			\usebeamerfont{author in head/foot}\insertshortauthor~~%\beamer@ifempty{\insertshortinstitute}{}{(\insertshortinstitute)}
+		\end{beamercolorbox}%
+	}%
+	\vskip0pt%
+}
+\makeatother
+\makeatletter
+\def\progressbar@progressbar{} % the progress bar
+\newcount\progressbar@tmpcounta% auxiliary counter
+\newcount\progressbar@tmpcountb% auxiliary counter
+\newdimen\progressbar@pbht %progressbar height
+\newdimen\progressbar@pbwd %progressbar width
+\newdimen\progressbar@tmpdim % auxiliary dimension
+\progressbar@pbwd=\linewidth
+\progressbar@pbht=1.5ex
+\def\progressbar@progressbar{%
+    \progressbar@tmpcounta=\insertframenumber
+    \progressbar@tmpcountb=\inserttotalframenumber
+    \progressbar@tmpdim=\progressbar@pbwd
+    \multiply\progressbar@tmpdim by \progressbar@tmpcounta
+    \divide\progressbar@tmpdim by \progressbar@tmpcountb
+  \begin{tikzpicture}[rounded corners=3pt,very thin]
+    \shade[top color=pbgray!20,bottom color=pbgray!20,middle color=pbgray!50]
+      (0pt, 0pt) rectangle ++ (\progressbar@pbwd, \progressbar@pbht);
+      \shade[draw=pbblue,top color=pbblue!50,bottom color=pbblue!50,middle color=pbblue] %
+        (0pt, 0pt) rectangle ++ (\progressbar@tmpdim, \progressbar@pbht);
+    \draw[color=normal text.fg!50]  
+      (0pt, 0pt) rectangle (\progressbar@pbwd, \progressbar@pbht) 
+        node[pos=0.5,color=normal text.fg] {\textnormal{%
+             \pgfmathparse{\insertframenumber*100/\inserttotalframenumber}%
+             \pgfmathprintnumber[fixed,precision=0]{\pgfmathresult}\,\%%
+        }%
+    };
+  \end{tikzpicture}%
+}
+\addtobeamertemplate{headline}{}
+{%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=4ex,center,dp=1ex]{white}%
+    \progressbar@progressbar%
+  \end{beamercolorbox}%
+}
+\makeatother
+
+
+%%% BLOCKS
+% block = Aufgabe
+\setbeamercolor{block title}{fg=black,bg=blue!30!white} 
+\setbeamercolor{block body}{fg=black, bg=blue!3!white}
+
+% alertblock = Definition
+\setbeamercolor{block title alerted}{fg=black,bg=red!50!white} 
+\setbeamercolor{block body alerted}{fg=black, bg=red!3!white}
+
+% exampleblock = Wiederholung
+\setbeamercolor{block title example}{fg=black,bg=green!30!white} 
+\setbeamercolor{block body example}{fg=black, bg=green!3!white}
+
+
+
+\begin{document}
+	%\author{www.oilbat.de}
+	%\title{Stochastik}
+	\subtitle{}
+	\logo{}
+	\institute{}
+	\date{}
+	\subject{}
+	\setbeamercovered{transparent}
+	\setbeamertemplate{navigation symbols}{}
+
+\addtocounter{framenumber}{-1}
+\setbeamercovered{invisible}
+
+\begin{frame}
+\begin{alertblock}{Verschiebungssatz}
+	Für eine diskrete oder eine stetige Zufallsvariable $X$ gilt
+	\begin{align*}
+	\mathbb{V}(X) =  \mathbb{E}(X^2)-\left( \mathbb{E}(X) \right)^2.
+	\end{align*}
+\end{alertblock}
+\end{frame}
+
+\begin{frame}
+\begin{exampleblock}{Varianz und Erwartungswert einer diskreten Zufallsvariablen}
+	Sei $X$ eine diskrete Zufallsvariable mit der W'keitsfunktion $f(x)$.
+	\begin{align*}
+	\mathbb{E}(X) &= \sum_i x_i f(x_i) \\
+	\mathbb{V}(X) &= \sum_i \left(x_i-\mathbb{E}(X)\right)^2 f(x_i)
+	\end{align*}
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}
+	\begin{exampleblock}{Varianz und Erwartungswert einer diskreten Zufallsvariablen}
+		Sei $X$ eine diskrete Zufallsvariable mit der W'keitsfunktion $f(x)$.
+		\begin{align*}
+		\mathbb{E}(X) &= \sum_i x_i f(x_i) \\
+		\mathbb{V}(X) &= \sum_i \left(x_i-\mathbb{E}(X)\right)^2 f(x_i)
+		\end{align*}
+	\end{exampleblock}
+	\begin{exampleblock}{Varianz und Erwartungswert einer stetigen Zufallsvariablen}
+		Sei $X$ eine stetige Zufallsvariable mit der Dichte $f(x)$.
+		\begin{align*}
+		\mathbb{E}(X) &= \int_{-\infty}^{\infty} xf(x)dx \\
+		\mathbb{V}(X) &= \int_{-\infty}^{\infty} \left( x-\mathbb{E}(X) \right)^2 f(x)dx
+		\end{align*}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}
+\begin{exampleblock}{Varianz und Erwartungswert einer diskreten Zufallsvariablen}
+	Für $X$ diskret:
+	\begin{align*}
+	\mathbb{E}(X) = \sum_i x_i f(x_i), \ \
+	\mathbb{V}(X) = \sum_i \left(x_i-\mathbb{E}(X)\right)^2 f(x_i)
+	\end{align*}
+	Für $X$ stetig:
+	\begin{align*}
+	\mathbb{E}(X) = \int_{-\infty}^{\infty} xf(x)dx, \ \
+	\mathbb{V}(X) = \int_{-\infty}^{\infty} \left( x-\mathbb{E}(X) \right)^2 f(x)dx
+	\end{align*}
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}
+\begin{exampleblock}{Varianz und Erwartungswert einer diskreten Zufallsvariablen}
+Für $X$ diskret:
+	\begin{align*}
+	\mathbb{E}(X) = \sum_i x_i f(x_i), \ \
+	\mathbb{V}(X) = \sum_i \left(x_i-\mathbb{E}(X)\right)^2 f(x_i)
+	\end{align*}
+Für $X$ stetig:
+	\begin{align*}
+	\mathbb{E}(X) = \int_{-\infty}^{\infty} xf(x)dx, \ \
+	\mathbb{V}(X) = \int_{-\infty}^{\infty} \left( x-\mathbb{E}(X) \right)^2 f(x)dx
+	\end{align*}
+\end{exampleblock}
+Betrachte die Zufallsvariable $(X-\mathbb{E}(X))^2$.
+\end{frame}
+
+\begin{frame}
+\begin{exampleblock}{Varianz und Erwartungswert einer diskreten Zufallsvariablen}
+	Für $X$ diskret:
+	\begin{align*}
+	\mathbb{E}(X) = \sum_i x_i f(x_i), \ \
+	\mathbb{V}(X) = \sum_i \left(x_i-\mathbb{E}(X)\right)^2 f(x_i)
+	\end{align*}
+	Für $X$ stetig:
+	\begin{align*}
+	\mathbb{E}(X) = \int_{-\infty}^{\infty} xf(x)dx, \ \
+	\mathbb{V}(X) = \int_{-\infty}^{\infty} \left( x-\mathbb{E}(X) \right)^2 f(x)dx
+	\end{align*}
+\end{exampleblock}
+Betrachte die Zufallsvariable $(X-\mathbb{E}(X))^2$. Dann gilt im diskreten und im stetigen Fall
+\begin{align*}
+\mathbb{V}(X) = \mathbb{E}\left[(X-\mathbb{E}(X))^2\right].
+\end{align*}
+\end{frame}
+
+\begin{frame}
+Im diskreten und im stetigen Fall gilt
+\begin{align*}
+\mathbb{V}(X) = \mathbb{E}\left[(X-\mathbb{E}(X))^2\right].
+\end{align*}
+\end{frame}
+
+\begin{frame}
+Im diskreten und im stetigen Fall gilt
+\begin{align*}
+\mathbb{V}(X) = \mathbb{E}\left[(X-\mathbb{E}(X))^2\right].
+\end{align*}
+\begin{alertblock}{Verschiebungssatz}
+	Für eine diskrete oder eine stetige Zufallsvariable $X$ gilt
+	\begin{align*}
+	\mathbb{V}(X) =  \mathbb{E}(X^2)-\left( \mathbb{E}(X) \right)^2.
+	\end{align*}
+\end{alertblock}
+\end{frame}
+
+\begin{frame}
+Im diskreten und im stetigen Fall gilt
+\begin{align*}
+\mathbb{V}(X) = \mathbb{E}\left[(X-\mathbb{E}(X))^2\right].
+\end{align*}
+\begin{alertblock}{Verschiebungssatz}
+	Für eine diskrete oder eine stetige Zufallsvariable $X$ gilt
+	\begin{align*}
+	\mathbb{V}(X) =  \mathbb{E}(X^2)-\left( \mathbb{E}(X) \right)^2.
+	\end{align*}
+\end{alertblock}
+\begin{align*}
+\onslide<1->{\mathbb{V}(X) &= \mathbb{E}\left[(X-\mathbb{E}(X))^2\right] \\}
+\onslide<2->{&= \mathbb{E} \left[ X^2 - 2X\mathbb{E}(X) + \left( \mathbb{E}(X) \right)^2   \right] \\}
+\onslide<3->{&= \mathbb{E} (X^2) - \mathbb{E}(2X\mathbb{E}(X)) + \mathbb{E}\left[\left( \mathbb{E}(X) \right)^2\right] \\}
+\onslide<4->{&= \mathbb{E} (X^2) - 2\mathbb{E}(X)\mathbb{E}(X) + \left( \mathbb{E}(X) \right)^2 \\}
+\onslide<5>{&= \mathbb{E} (X^2) - \left( \mathbb{E}(X) \right)^2}
+\end{align*}
+\end{frame}
+
+
+
+\end{document}
