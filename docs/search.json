@@ -42,6 +42,41 @@
     "text": "Ist ein geschätzter Koeffizient signifikant? Unter der Annahme, dass die Fehler im Modell normalverteilt sind, können wir dazu einen t-Test durchführen."
   },
   {
+    "objectID": "content/verteilungen/kovarianz.html",
+    "href": "content/verteilungen/kovarianz.html",
+    "title": "Kovarianz",
+    "section": "",
+    "text": "Die Kovarianz ist ein Maß dafür, wie zwei Zufallsvariablen gemeinsam variieren. Eine positive Kovarianz zeigt an, dass sie tendenziell gemeinsam zunehmen, während eine negative Kovarianz anzeigt, dass sie tendenziell in entgegengesetzte Richtungen variieren.\nDie Kovarianz zweier Zufallsvariablen \\(X\\) und \\(Y\\) ist definiert als \\[Cov(X,Y) = E([X-E(X)][Y-E(Y)]).\\]"
+  },
+  {
+    "objectID": "content/verteilungen/unabhaengigkeit.html",
+    "href": "content/verteilungen/unabhaengigkeit.html",
+    "title": "Unabhängigkeit",
+    "section": "",
+    "text": "Zwei Zufallsvariablen, die unabhängig sind, sind auch unkorreliert."
+  },
+  {
+    "objectID": "content/verteilungen/unkorreliertheit.html",
+    "href": "content/verteilungen/unkorreliertheit.html",
+    "title": "Unkorreliertheit",
+    "section": "",
+    "text": "Aus Unkorreliertheit folgt nicht Unabhängigkeit!\n\n\n\n\n\nEs gibt nämlich Zufallsvariablen, die unkorreliert aber nicht unabhängig sind. Seien zum Beispiel \\(X\\) und \\(Y\\) zwei unabhängige Zufallsvariablen mit\n\n\\(\\Pr(X=0)=\\Pr(X=1)=0.5\\)\nund \\(\\Pr(Y=-1)=\\Pr(Y=1)=0.5\\).\n\nIn diesem Fall können wir zeigen, dass \\(X\\) und die Zufallsvariable \\(Z := XY\\) zwar unkorreliert, aber nicht unabhängig sind:\n\nEs gilt \\[Cov (Z,X) = E([Z-E(Z)][X-E(X)]) = E(Z(X-0.5)) = E(X^2-0.5X) E(Y)=0,\\] da \\(E(Z) = E(XY) = E(X)E(Y) = 0\\) wegen Unabhängigkeit von \\(X\\) und \\(Y\\) und da \\(E(Y) = 0\\). Also sind \\(X\\) und \\(Z\\) unkorreliert.\nEs gilt \\[\\Pr(Z=1\\mid X = 0) = 0 \\neq 0.5 = \\Pr(Z=1\\mid X = 1),\\] also hängt das Ergebnis von \\(Z\\) von \\(X\\) ab, also sind sie nicht unabhängig."
+  },
+  {
+    "objectID": "content/verteilungen/zufallsexperiment.html",
+    "href": "content/verteilungen/zufallsexperiment.html",
+    "title": "Zufallsexperiment",
+    "section": "",
+    "text": "Ein Zufallsexperiment ist ein Vorgang oder eine Handlung, bei der das Ergebnis nicht vorhersehbar ist und mehrere mögliche Ergebnisse hat. Das Ergebnis hängt vom Zufall ab.\n\n\n\n\n\n\nBeispiel\n\n\n\nDas Werfen eines sechsseitigen Würfels ist ein Zufallsexperiment. Bevor der Würfel geworfen wird, ist nicht vorhersehbar, welche Augenzahl oben landen wird. Es gibt sechs mögliche Ergebnisse \\(1, 2, 3, 4, 5, 6\\), und das tatsächliche Ergebnis ist zufällig und nicht im Voraus festgelegt. Das Ergebnis kann durch eine Zufallsvariable angegeben werden."
+  },
+  {
+    "objectID": "content/verteilungen/zufallsvariablen.html",
+    "href": "content/verteilungen/zufallsvariablen.html",
+    "title": "Zufallsvariablen",
+    "section": "",
+    "text": "Eine Zufallsvariable ist eine Größe, deren Wert vom Zufall abhängt. Ganz formal ist sie eine Funktion, die den möglichen Ergebnissen eines Zufallsexperiments einen Wert (meistens eine Zahl) zuordnet.\n\n\n\n\n\n\nBeispiel\n\n\n\nBetrachten wir das Werfen zweier sechsseitiger Würfel. Die Zufallsvariable \\(X\\) könnte die Summe der Augenzahlen darstellen. \\(X\\) kann also Werte von \\(2\\) bis \\(12\\) annehmen."
+  },
+  {
     "objectID": "content/zeitreihenanalyse/zeitreihen.html",
     "href": "content/zeitreihenanalyse/zeitreihen.html",
     "title": "Zeitreihen",
@@ -53,6 +88,6 @@
     "href": "index.html",
     "title": "Übersicht",
     "section": "",
-    "text": "Einfache Regression\n\n\n\n\n\n\n\n\n\n\nMultiple Regression\n\n\n\n\n\n\n\n\n\n\nRegression in R\n\n\n\n\n\n\n\n\n\n\nZeitreihen\n\n\n\n\n\n\n\n\n\n\nt-Test\n\n\n\n\n\n\n\nKeine Treffer"
+    "text": "Einfache Regression\n\n\n\n\n\n\n\n\n\n\nKovarianz\n\n\n\n\n\n\n\n\n\n\nKovarianzmatrix\n\n\n\n\n\n\n\n\n\n\nMultiple Regression\n\n\n\n\n\n\n\n\n\n\nRegression in R\n\n\n\n\n\n\n\n\n\n\nUnabhängigkeit\n\n\n\n\n\n\n\n\n\n\nUnkorreliertheit\n\n\n\n\n\n\n\n\n\n\nZeitreihen\n\n\n\n\n\n\n\n\n\n\nZufallsexperiment\n\n\n\n\n\n\n\n\n\n\nZufallsvariablen\n\n\n\n\n\n\n\n\n\n\nt-Test\n\n\n\n\n\n\n\nKeine Treffer"
   }
 ]

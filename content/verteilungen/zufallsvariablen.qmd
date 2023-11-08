@@ -1,0 +1,11 @@
+---
+title: "Zufallsvariablen"
+---
+
+Eine Zufallsvariable ist eine Größe, deren Wert vom Zufall abhängt. Ganz formal ist sie eine Funktion, die den möglichen Ergebnissen eines [Zufallsexperiments](zufallsexperiment.qmd) einen Wert (meistens eine Zahl) zuordnet.
+
+::: {.callout-tip}
+## Beispiel
+
+Betrachten wir das Werfen zweier sechsseitiger Würfel. Die Zufallsvariable $X$ könnte die Summe der Augenzahlen darstellen. $X$ kann also Werte von $2$ bis $12$ annehmen.
+:::

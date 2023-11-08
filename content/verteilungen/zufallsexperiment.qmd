@@ -1,0 +1,11 @@
+---
+title: "Zufallsexperiment"
+---
+
+Ein Zufallsexperiment ist ein Vorgang oder eine Handlung, bei der das Ergebnis nicht vorhersehbar ist und mehrere mögliche Ergebnisse hat. Das Ergebnis hängt vom Zufall ab.
+
+::: {.callout-tip}
+## Beispiel
+
+Das Werfen eines sechsseitigen Würfels ist ein Zufallsexperiment. Bevor der Würfel geworfen wird, ist nicht vorhersehbar, welche Augenzahl oben landen wird. Es gibt sechs mögliche Ergebnisse $1, 2, 3, 4, 5, 6$, und das tatsächliche Ergebnis ist zufällig und nicht im Voraus festgelegt. Das Ergebnis kann durch eine [Zufallsvariable](zufallsvariablen.qmd) angegeben werden.
+:::

@@ -1,0 +1,5 @@
+---
+title: "Unabhängigkeit"
+---
+
+Zwei Zufallsvariablen, die unabhängig sind, sind auch unkorreliert.
